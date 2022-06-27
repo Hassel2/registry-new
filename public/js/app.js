@@ -5534,11 +5534,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['label', 'nodes', 'depth'],
   data: function data() {
@@ -10672,7 +10667,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.Licenses[data-v-477ce850] {\n  height: 600px;\n  width: 23%;\n  float: left;\n  border: 3px solid;\n}\n.Content[data-v-477ce850] {\n  height: 600px;\n  width: 77%;\n  float: left;\n  border: 3px solid;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.Licenses[data-v-477ce850] {\r\n  height: 600px;\r\n  width: 23%;\r\n  float: left;\r\n  border: 3px solid;\n}\n.Content[data-v-477ce850] {\r\n  height: 600px;\r\n  width: 77%;\r\n  float: left;\r\n  border: 3px solid;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10696,7 +10691,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-15fe7f24]:root {\n  --scrollbarBg: rgba(2, 142, 74, 1);\n  --scrollbarThumb: rgba(255, 91, 91, 0.8);\n  --scrollbarWidth: 12px;\n  --scrollbarBorder: 3px solid var(--scrollbarBg);\n  --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);\n}\n.container[data-v-15fe7f24] {\n  scrollbar-width: var(--scrollbarWidth);\n  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar {\n  width: var(--scrollbarWidth);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar-track {\n  background: var(--scrollbarBg);\n  border-radius: var(--scrollbarBorderRadius);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar-thumb {\n  background-color: var(--scrollbarThumb);\n  border-radius: var(--scrollbarBorderRadius);\n  border: var(--scrollbarBorder);\n}\n.container[data-v-15fe7f24] {\n  width: clamp(50%, 300px);\n  height: 600px;\n  overflow: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-15fe7f24]:root {\r\n  --scrollbarBg: rgba(2, 142, 74, 1);\r\n  --scrollbarThumb: rgba(255, 91, 91, 0.8);\r\n  --scrollbarWidth: 12px;\r\n  --scrollbarBorder: 3px solid var(--scrollbarBg);\r\n  --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);\n}\n.container[data-v-15fe7f24] {\r\n  scrollbar-width: var(--scrollbarWidth);\r\n  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: var(--scrollbarWidth);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: var(--scrollbarBg);\r\n  border-radius: var(--scrollbarBorderRadius);\n}\n.container[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background-color: var(--scrollbarThumb);\r\n  border-radius: var(--scrollbarBorderRadius);\r\n  border: var(--scrollbarBorder);\n}\n.container[data-v-15fe7f24] {\r\n  width: clamp(50%, 300px);\r\n  height: 600px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -28909,32 +28904,12 @@ var render = function () {
         [
           this.$props.nodes
             ? _c("span", [
-                _c(
-                  "svg",
-                  {
-                    class:
-                      _vm.showChildren || _vm.$root.search != ""
-                        ? "bi bi-caret-right-fill"
-                        : "bi bi-caret-down-fill",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      width: "10",
-                      height: "10",
-                      fill: "currentColor",
-                      viewBox: "0 0 16 16",
-                    },
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          _vm.showChildren || _vm.$root.search != ""
-                            ? "M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
-                            : "m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z",
-                      },
-                    }),
-                  ]
-                ),
+                _c("i", {
+                  class:
+                    _vm.showChildren || _vm.$root.search != ""
+                      ? "bi bi-caret-down-fill"
+                      : "bi bi-caret-right-fill",
+                }),
               ])
             : _vm._e(),
           _vm._v("\n\n    " + _vm._s(_vm.label) + "\n  "),
