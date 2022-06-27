@@ -3,44 +3,83 @@
 namespace App\Imports;
 
 use App\Models\License;
+use App\Models\LicenseArea;
+use App\Models\FederalAuthority;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithProgressBar;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class LicenseImport implements WithMultipleSheets, WithProgressBar {
-	use Importable;
-
-	public function sheets(): array {
-        return [
-           'Лицензия' => new LicenseMakeImport(),
-        ];
-    }
-
-}
-
-class LicenseMakeImport implements ToCollection, WithProgressBar {
+class LicenseImport implements ToCollection {
 	use Importable;
 
 	public function collection(Collection $rows) {
-		
+
+		$isFisrt = true;
+		$counter = 0;
+
+		foreach ($rows as $row) {
+			if ($isFisrt) {
+				$isFisrt = false; # To skip the heading row
+				continue;
+			}	
+
+			
+			########################
+			# license_areas import #
+			########################
+			$subsoil_user = DB::table('subsoil_users')
+				->select('id')
+				->where('company', '=', trim($row[0]))
+				->get();//[0]
+				//->id;
+			
+			if (count($subsoil_user) == 0) {  
+				$counter += 1;
+				continue; 
+			}
+			
+			$subsoil_user = $subsoil_user[0]->id;
+
+			$creationArray = [
+				'name' => trim($row[1]),
+				'subsoil_user' => $subsoil_user
+			];
+
+			$validator = Validator::make($creationArray, LicenseArea::rules());
+
+			if (!$validator->fails()) {
+				LicenseArea::create($creationArray);
+			}
+
+			##############################
+			# federal_authotities import #
+			##############################
+			$creationArray = [
+				'name' => trim($row[13])
+			];
+
+			$validator = Validator::make($creationArray, FederalAuthority::rules());
+
+			if (!$validator->fails()) {
+				FederalAuthority::create($creationArray);
+			}
+		}
+
+		/* echo "Number of unknown companies: ".$counter.PHP_EOL; */
+
+		###################
+		# licenses import #
+		###################
 		$isFirst = true;
 
 		foreach ($rows as $row) {
-			break;
 			if ($isFirst) {
 				$isFirst = false; # To skip the heading row
 				continue;
 			}
-
-			/* echo gettype($row[10]).PHP_EOL; */
-			/* echo $row[10].PHP_EOL; */
-			/* echo Date::excelToDateTimeObject($row[10])->format('Y-m-d').PHP_EOL; */
-			/* continue; */
 
 			$license_area = DB::table('license_areas')
 				->select('id')
