@@ -7,22 +7,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithProgressBar;
 
-class SubsoilUserImport implements WithMultipleSheets, WithProgressBar {
-	use Importable;
-
-	public function sheets(): array {
-        return [
-           'Недропользователь (компания)' => new SubsoilUserMakeImport(),
-        ];
-    }
-
-}
-
-class SubsoilUserMakeImport implements ToCollection, WithProgressBar {
+class SubsoilUserImport implements ToCollection {
 	use Importable;
 
 	public function collection(Collection $rows) {
@@ -73,8 +60,11 @@ class SubsoilUserMakeImport implements ToCollection, WithProgressBar {
 			$management_company = DB::table('subsoil_users')
 				->select('id')
 				->where('company', '=', trim($row[10]))
-				->get()[0]
-				->id;
+				->get();//[0]
+				//->id;
+			
+			if (count($management_company) == 0) continue;
+			$management_company = $management_company[0]->id;
 
 			SubsoilUser::where('company', '=', trim($row[0]))->update(['management_company' => $management_company]);
 			
