@@ -156,32 +156,29 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --scrollbarBg: rgba(2, 142, 74, 1);
-  --scrollbarThumb: rgba(255, 91, 91, 0.8);
-  --scrollbarWidth: 12px;
-  --scrollbarBorder: 3px solid var(--scrollbarBg);
-  --scrollbarBorderRadius: calc(var(--scrollbarWidth) / 2);
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
 }
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .container {
-  scrollbar-width: var(--scrollbarWidth);
-  scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
-}
-.container::-webkit-scrollbar {
-  width: var(--scrollbarWidth);
-}
-.container::-webkit-scrollbar-track {
-  background: var(--scrollbarBg);
-  border-radius: var(--scrollbarBorderRadius);
-}
-.container::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbarThumb);
-  border-radius: var(--scrollbarBorderRadius);
-  border: var(--scrollbarBorder);
-}
-.container {
-  width: clamp(50%, 300px);
-  height: 600px;
+  width: clamp(40%, 300px);
+  height: 560px;
   overflow: auto;
 }
 </style>
