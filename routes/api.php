@@ -18,4 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/mng', [SubsoilUsersTree::class, 'getManagementCompanies']);
+Route::get('/rootCompany', [SubsoilUsersTree::class, 'getManagementCompanies']);
+Route::get('/rootCompany{id}/childs', [SubsoilUsersTree::class, 'getChildCompanies']);

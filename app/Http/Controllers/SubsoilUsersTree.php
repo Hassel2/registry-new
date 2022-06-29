@@ -22,4 +22,14 @@ class SubsoilUsersTree extends Controller
 
 		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
 	}
+
+	public function getChildCompanies(Request $request, $id) {
+
+		$result = DB::table('subsoil_users')
+			->select('id', 'company')
+			->where('management_company', '=', $id)
+			->get();	
+
+		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
+	}
 }
