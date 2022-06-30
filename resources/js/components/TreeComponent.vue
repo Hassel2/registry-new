@@ -17,141 +17,32 @@ import TreeMenu from "./TreeMenu";
 export default {
   data() {
     return {
-      tree: {
-        label: "root",
-        nodes: [
-          {
-            label: "item1",
-            nodes: [
-              {
-                label: "item1.1",
-              },
-              {
-                label: "item1.2",
-                nodes: [
-                  {
-                    label: "root",
-                    nodes: [
-                      {
-                        label: "item1",
-                        nodes: [
-                          {
-                            label: "item1.1",
-                          },
-                          {
-                            label: "item1.2",
-                            nodes: [
-                              {
-                                label: "root",
-                                nodes: [
-                                  {
-                                    label: "item1",
-                                    nodes: [
-                                      {
-                                        label: "item1.1",
-                                      },
-                                      {
-                                        label: "item1.2",
-                                        nodes: [
-                                          {
-                                            label: "item1.2.1",
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                  {
-                                    label: "item2",
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        label: "root",
-                        nodes: [
-                          {
-                            label: "item1",
-                            nodes: [
-                              {
-                                label: "item1.1",
-                              },
-                              {
-                                label: "item1.2",
-                                nodes: [
-                                  {
-                                    label: "item1.2.1",
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                          {
-                            label: "root",
-                            nodes: [
-                              {
-                                label: "item1",
-                                nodes: [
-                                  {
-                                    label: "item1.1",
-                                  },
-                                  {
-                                    label: "item1.2",
-                                    nodes: [
-                                      {
-                                        label: "item1.2.1",
-                                      },
-                                    ],
-                                  },
-                                ],
-                              },
-                              {
-                                label: "item2",
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            label: "root",
-            nodes: [
-              {
-                label: "item1",
-                nodes: [
-                  {
-                    label: "item1.1",
-                  },
-                  {
-                    label: "item1.2",
-                    nodes: [
-                      {
-                        label: "item1.2.1",
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                label: "item2",
-              },
-            ],
-          },
-        ],
-      },
+      // tree: {
+      //   label: "root",
+      //   nodes: [ ],
+      // },
+      tree: null
     };
+  },
+
+  mounted(){
+    this.GetCompanies()
+  },
+
+  methods: {
+    GetCompanies(){
+      axios.get('/api/rootCompany')
+        .then(res => {
+          this.tree = res.data
+      })
+      console.log(this.tree);
+    }
   },
 
   components: {
     TreeMenu
   },
+
 };
 </script>
 
