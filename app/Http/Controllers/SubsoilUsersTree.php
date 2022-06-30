@@ -11,14 +11,8 @@ class SubsoilUsersTree extends Controller
 
 		$result = DB::table('subsoil_users')
 			->select('id', 'company')
-			->joinSub(
-				DB::table('subsoil_users')
-					->select('management_company')
-					->distinct(), 'mng_comp',
-				function ($join) {
-					$join->on('subsoil_users.id', '=', 'mng_comp.management_company');
-				}
-			)->get();	
+			->where(DB::raw('management_company is null'))
+			->get();	
 
 		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
 	}
@@ -29,6 +23,13 @@ class SubsoilUsersTree extends Controller
 			->select('id', 'company')
 			->where('management_company', '=', $id)
 			->get();	
+
+		if (count($result) != 0) return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
+
+		$result = DB::table('license_areas')
+			->select('id', 'name')
+			->where('subsoil_user', '=', $id)
+			->get();
 
 		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
 	}
