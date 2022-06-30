@@ -11,7 +11,7 @@ class SubsoilUsersTree extends Controller
 
 		$result = DB::table('subsoil_users')
 			->select('id', 'company')
-			->where(DB::raw('management_company is null'))
+			->whereRaw('management_company is null')
 			->get();	
 
 		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
