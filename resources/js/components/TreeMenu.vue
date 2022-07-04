@@ -1,23 +1,26 @@
 <template>
   <div class="tree-menu">
     <div :style="indent"
-    :class="label.includes($root.search) && $root.search != '' ? 'text-primary' : ''"
-    @click="toggleChildren">
-      <!-- <span v-if="this.$props.nodes">[{{ showChildren ? '-' : '+' }}]</span>  -->
-      <span v-if="this.$props.nodes">
+    @click="GetChildren($props.id)">
+      <!-- <span v-if="this.$props.nodes">
         <i :class="showChildren || $root.search != '' ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
-      </span>
+      </span> -->
 
-      {{ label }}
+      {{ company }}
     </div>
-    <tree-menu v-if="isOpen($root.search)" v-for="node in nodes" :nodes="node.nodes" :label="node.label":depth="depth + 1"></tree-menu>
+    <tree-menu v-if="showChildren" 
+    v-for="node in nodes" 
+    :nodes="node.nodes" 
+    :company="node.company" 
+    :id ="node.id"
+    :depth="depth + 1"></tree-menu>
   </div>
 </template>
 
 <script>
 
 export default { 
-  props: [ 'label', 'nodes', 'depth'],
+  props: ['company', 'nodes', 'id', 'depth'],
 
   data() {
     return { 
@@ -34,19 +37,21 @@ export default {
   },
 
   methods: {
-    toggleChildren() {
+    GetChildren(id) {
+      axios.get(`/api/rootCompany${id}/childs`)
+        .then(res => {
+          let companies = res.data.data
+
+          for(let i = 0; i < companies.length; i++){
+            let CurrentCompany = {company: companies[i].company, id: companies[i].id, nodes: []}
+            this.nodes.push(CurrentCompany)
+          }
+
+        })
+
       this.showChildren = !this.showChildren;
     },
 
-    isOpen(search){
-      if((search == '' || search == null) && !this.showChildren){
-        return false
-      }
-      else{
-        //this.toggleChildren()
-        return true
-      }
-    }
   },
 }
 </script>

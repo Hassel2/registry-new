@@ -5413,15 +5413,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      // tree: {
-      //   label: "root",
-      //   nodes: [ ],
-      // },
-      tree: null
+      tree: {
+        company: "Недропользователи",
+        id: -1,
+        nodes: []
+      }
     };
   },
   mounted: function mounted() {
@@ -5432,9 +5433,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/rootCompany').then(function (res) {
-        _this.tree = res.data;
+        var companies = res.data.data;
+
+        for (var i = 0; i < companies.length; i++) {
+          var CurrentCompany = {
+            company: companies[i].company,
+            id: companies[i].id,
+            nodes: []
+          };
+
+          _this.tree.nodes.push(CurrentCompany);
+        }
       });
-      console.log(this.tree);
     }
   },
   components: {
@@ -5471,8 +5481,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['label', 'nodes', 'depth'],
+  props: ['company', 'nodes', 'id', 'depth'],
   data: function data() {
     return {
       showChildren: false
@@ -5487,16 +5500,23 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    toggleChildren: function toggleChildren() {
+    GetChildren: function GetChildren(id) {
+      var _this = this;
+
+      axios.get("/api/rootCompany".concat(id, "/childs")).then(function (res) {
+        var companies = res.data.data;
+
+        for (var i = 0; i < companies.length; i++) {
+          var CurrentCompany = {
+            company: companies[i].company,
+            id: companies[i].id,
+            nodes: []
+          };
+
+          _this.nodes.push(CurrentCompany);
+        }
+      });
       this.showChildren = !this.showChildren;
-    },
-    isOpen: function isOpen(search) {
-      if ((search == '' || search == null) && !this.showChildren) {
-        return false;
-      } else {
-        //this.toggleChildren()
-        return true;
-      }
     }
   }
 });
@@ -10628,7 +10648,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  width: clamp(40%, 300px);\r\n  height: 560px;\r\n  overflow: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  width: clamp(40%, 300px);\r\n  height: 560px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -28794,7 +28814,12 @@ var render = function () {
       [
         _c("tree-menu", {
           ref: "menu",
-          attrs: { label: _vm.tree.label, nodes: _vm.tree.nodes, depth: 0 },
+          attrs: {
+            company: _vm.tree.company,
+            nodes: _vm.tree.nodes,
+            id: 0,
+            depth: 0,
+          },
         }),
       ],
       1
@@ -28831,34 +28856,23 @@ var render = function () {
       _c(
         "div",
         {
-          class:
-            _vm.label.includes(_vm.$root.search) && _vm.$root.search != ""
-              ? "text-primary"
-              : "",
           style: _vm.indent,
-          on: { click: _vm.toggleChildren },
+          on: {
+            click: function ($event) {
+              return _vm.GetChildren(_vm.$props.id)
+            },
+          },
         },
-        [
-          this.$props.nodes
-            ? _c("span", [
-                _c("i", {
-                  class:
-                    _vm.showChildren || _vm.$root.search != ""
-                      ? "bi bi-caret-down-fill"
-                      : "bi bi-caret-right-fill",
-                }),
-              ])
-            : _vm._e(),
-          _vm._v("\n\n    " + _vm._s(_vm.label) + "\n  "),
-        ]
+        [_vm._v("\n\n    " + _vm._s(_vm.company) + "\n  ")]
       ),
       _vm._v(" "),
       _vm._l(_vm.nodes, function (node) {
-        return _vm.isOpen(_vm.$root.search)
+        return _vm.showChildren
           ? _c("tree-menu", {
               attrs: {
                 nodes: node.nodes,
-                label: node.label,
+                company: node.company,
+                id: node.id,
                 depth: _vm.depth + 1,
               },
             })

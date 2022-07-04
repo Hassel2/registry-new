@@ -3,10 +3,11 @@
     <div class="container">
       <tree-menu
         ref="menu"
-        :label="tree.label"
+        :company="tree.company"
         :nodes="tree.nodes"
-        :depth="0"
-      ></tree-menu>
+        :id="0"
+        :depth="0">
+      </tree-menu>
     </div>
   </div>
 </template>
@@ -17,11 +18,12 @@ import TreeMenu from "./TreeMenu";
 export default {
   data() {
     return {
-      // tree: {
-      //   label: "root",
-      //   nodes: [ ],
-      // },
-      tree: null
+      tree: {
+        company: "Недропользователи",
+        id: -1,
+        nodes: [ ],
+      },
+
     };
   },
 
@@ -33,9 +35,13 @@ export default {
     GetCompanies(){
       axios.get('/api/rootCompany')
         .then(res => {
-          this.tree = res.data
-      })
-      console.log(this.tree);
+          let companies = res.data.data
+
+          for(let i = 0; i < companies.length; i++){
+            let CurrentCompany = {company: companies[i].company, id: companies[i].id, nodes: []}
+            this.tree.nodes.push(CurrentCompany)
+          }
+        })
     }
   },
 
