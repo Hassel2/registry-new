@@ -38,7 +38,8 @@ export default {
 
   methods: {
     GetChildren(id) {
-      axios.get(`/api/rootCompany${id}/childs`)
+      if(!this.showChildren){
+        axios.get(`/api/rootCompany${id}/childs`)
         .then(res => {
           let companies = res.data.data
 
@@ -48,6 +49,11 @@ export default {
           }
 
         })
+      }
+      
+      else{
+        this.nodes.length = 0
+      }
 
       this.showChildren = !this.showChildren;
     },

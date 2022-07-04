@@ -5503,19 +5503,24 @@ __webpack_require__.r(__webpack_exports__);
     GetChildren: function GetChildren(id) {
       var _this = this;
 
-      axios.get("/api/rootCompany".concat(id, "/childs")).then(function (res) {
-        var companies = res.data.data;
+      if (!this.showChildren) {
+        axios.get("/api/rootCompany".concat(id, "/childs")).then(function (res) {
+          var companies = res.data.data;
 
-        for (var i = 0; i < companies.length; i++) {
-          var CurrentCompany = {
-            company: companies[i].company,
-            id: companies[i].id,
-            nodes: []
-          };
+          for (var i = 0; i < companies.length; i++) {
+            var CurrentCompany = {
+              company: companies[i].company,
+              id: companies[i].id,
+              nodes: []
+            };
 
-          _this.nodes.push(CurrentCompany);
-        }
-      });
+            _this.nodes.push(CurrentCompany);
+          }
+        });
+      } else {
+        this.nodes.length = 0;
+      }
+
       this.showChildren = !this.showChildren;
     }
   }
