@@ -10,7 +10,7 @@ class SubsoilUsersTree extends Controller
 	public function getManagementCompanies(Request $request) {
 
 		$result = DB::table('subsoil_users')
-			->select('id', 'company')
+			->select(DB::raw('id, company as name'))
 			->whereRaw('management_company is null')
 			->get();	
 
@@ -20,7 +20,7 @@ class SubsoilUsersTree extends Controller
 	public function getChildCompanies(Request $request, $id) {
 
 		$result = DB::table('subsoil_users')
-			->select('id', 'company')
+			->select(DB::raw('id, company as name'))
 			->where('management_company', '=', $id)
 			->get();	
 
