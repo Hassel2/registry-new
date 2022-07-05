@@ -33,4 +33,19 @@ class SubsoilUsersTree extends Controller
 
 		return $this->sendResponse($result->toArray(), 'Data retrived succesfully');
 	}
+
+	public function search(Request $request, $searchStr) {
+
+		$subsouilUsersSearch = DB::table('subsoil_users')
+			->select(DB::raw('id, company as name'))
+			->where('company', 'like', '%'.$searchStr.'%');
+			
+		$result = DB::table('license_areas')
+			->select('id', 'name')
+			->where('name', 'like', '%'.$searchStr.'%')
+			->union($subsouilUsersSearch)
+			->get();
+
+		return $this->sendResponse($result->toArray(), 'Data retriced successfully');
+	}
 }
