@@ -3,9 +3,10 @@
     <div class="container">
       <tree-menu
         ref="menu"
-        :company="tree.company"
+        :name="tree.name"
         :nodes="tree.nodes"
-        :id="0"
+        :message="tree.message"
+        :id="-1"
         :depth="0">
       </tree-menu>
     </div>
@@ -19,9 +20,10 @@ export default {
   data() {
     return {
       tree: {
-        company: "Недропользователи",
+        name: "Недропользователи",
         id: -1,
         nodes: [ ],
+        message: "root",
       },
 
     };
@@ -38,11 +40,11 @@ export default {
           let companies = res.data.data
 
           for(let i = 0; i < companies.length; i++){
-            let CurrentCompany = {company: companies[i].company, id: companies[i].id, nodes: []}
-            this.tree.nodes.push(CurrentCompany)
+            let Currentname = {name: companies[i].name, id: companies[i].id, message: res.data.message, nodes: []}
+            this.tree.nodes.push(Currentname)
           }
         })
-    }
+    },
   },
 
   components: {

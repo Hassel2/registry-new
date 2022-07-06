@@ -1,17 +1,18 @@
 <template>
   <div class="tree-menu">
     <div :style="indent"
-    @click="GetChildren($props.id)">
+    @click="GetChildren($props.id, $props.message)">
       <!-- <span v-if="this.$props.nodes">
         <i :class="showChildren || $root.search != '' ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
       </span> -->
 
-      {{ company }}
+      {{ name }}
     </div>
     <tree-menu v-if="showChildren" 
     v-for="node in nodes" 
     :nodes="node.nodes" 
-    :company="node.company" 
+    :name="node.name" 
+    :message="node.message"
     :id ="node.id"
     :depth="depth + 1"></tree-menu>
   </div>
@@ -20,7 +21,7 @@
 <script>
 
 export default { 
-  props: ['company', 'nodes', 'id', 'depth'],
+  props: ['name', 'nodes', 'id', 'message', 'depth'],
 
   data() {
     return { 
@@ -37,22 +38,24 @@ export default {
   },
 
   methods: {
-    GetChildren(id) {
+    GetChildren(id, message) {
       if(!this.showChildren){
         axios.get(`/api/rootCompany${id}/childs`)
         .then(res => {
           let companies = res.data.data
 
-          for(let i = 0; i < companies.length; i++){
-            let CurrentCompany = {company: companies[i].company, id: companies[i].id, nodes: []}
-            this.nodes.push(CurrentCompany)
+          if(message == "companies"){
+            for(let i = 0; i < companies.length; i++){
+              let Currentname = {name: companies[i].name, id: companies[i].id, message: res.data.message, nodes: []}
+              console.log(Currentname)
+              this.nodes.push(Currentname)
+            }
           }
-
         })
       }
       
       else{
-        this.nodes.length = 0
+        this.nodes.length = []
       }
 
       this.showChildren = !this.showChildren;

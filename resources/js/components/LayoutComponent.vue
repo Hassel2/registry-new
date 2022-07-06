@@ -1,19 +1,21 @@
 <template>
   <div>
     <div class="Licenses">
-      <input v-model="$root.search" />
-      <tree-component></tree-component>
+      <search-component></search-component>
+      <tree-component ref = 'tree'></tree-component>
     </div>
     <div class="Content">Content</div>
   </div>
 </template>
 
 <script>
+import SearchComponent from './SearchComponent.vue';
 import TreeComponent from './TreeComponent.vue';
 
 export default {
   components: {
-    TreeComponent
+    TreeComponent,
+    SearchComponent,
   },
 };
 </script>
