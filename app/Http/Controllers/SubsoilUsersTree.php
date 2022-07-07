@@ -12,7 +12,17 @@ class SubsoilUsersTree extends Controller
 		$result = DB::table('subsoil_users')
 			->select(DB::raw('id, company as name'))
 			->whereRaw('management_company is null')
-			->get();	
+			->get();
+			
+		foreach ($result as $subsoilUser) {
+			$amount = DB::table('subsoil_users')
+				->select(DB::raw('count(*) as amount'))
+				->where('management_company', '=', $subsoilUser->id)
+				->get()[0]
+				->amount;
+			
+			$subsoilUser->amount = $amount;
+		}
 
 		return $this->sendResponse($result->toArray(), 'companies');
 	}
@@ -24,7 +34,19 @@ class SubsoilUsersTree extends Controller
 			->where('management_company', '=', $id)
 			->get();	
 
-		if (count($result) != 0) return $this->sendResponse($result->toArray(), 'companies');
+		if (count($result) != 0) {
+			foreach ($result as $subsoilUser) {
+				$amount = DB::table('subsoil_users')
+					->select(DB::raw('count(*) as amount'))
+					->where('management_company', '=', $subsoilUser->id)
+					->get()[0]
+					->amount;
+
+				$subsoilUser->amount = $amount;
+			}
+			
+			return $this->sendResponse($result->toArray(), 'companies');
+		}
 
 		$result = DB::table('license_areas')
 			->select('id', 'name')
@@ -40,6 +62,18 @@ class SubsoilUsersTree extends Controller
 			->select(DB::raw('id, company as name'))
 			->where('company', 'like', '%'.$searchStr.'%')
 			->get();
+
+		if (count($subsouilUsersSearch) != 0) {
+			foreach ($subsouilUsersSearch as $subsoilUser) {
+				$amount = DB::table('subsoil_users')
+					->select(DB::raw('count(*) as amount'))
+					->where('management_company', '=', $subsoilUser->id)
+					->get()[0]
+					->amount;
+
+				$subsoilUser->amount = $amount;
+			}
+		}
 			
 		$licenseAreasSearch = DB::table('license_areas')
 			->select('id', 'name')
