@@ -9,23 +9,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class FederalDistrictImport implements ToCollection {
+class FederalDistrictImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
 		
-		$isFisrt = true;
-
 		############################
 		# federal_districts import #
 		############################
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
 			$creationArray = [
 				'name' => trim($row[2])
 			];
@@ -37,20 +31,12 @@ class FederalDistrictImport implements ToCollection {
 			}
 
 			FederalDistrict::create($creationArray);
-
 		}
 
 		######################
 		# rf_subjects import #
 		######################
-		$isFisrt = true;
-
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
 			$federalDistrict = DB::table('federal_districts')
 								->select('id')
 								->where('name', '=', trim($row[2]))
@@ -70,5 +56,10 @@ class FederalDistrictImport implements ToCollection {
 			
 			RfSubject::create($creationArray);
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }

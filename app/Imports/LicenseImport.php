@@ -10,23 +10,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class LicenseImport implements ToCollection {
+class LicenseImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
 
-		$isFisrt = true;
 		$counter = 0;
 
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
-			
 			########################
 			# license_areas import #
 			########################
@@ -73,14 +67,7 @@ class LicenseImport implements ToCollection {
 		###################
 		# licenses import #
 		###################
-		$isFirst = true;
-
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$license_area = DB::table('license_areas')
 				->select('id')
 				->where('name', '=', trim($row[1]))
@@ -139,5 +126,10 @@ class LicenseImport implements ToCollection {
 				->where('view', '=', trim($row[4]))
 				->update(['prev_license' => $prev_license]);	
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }

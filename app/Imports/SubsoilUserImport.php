@@ -8,20 +8,14 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class SubsoilUserImport implements ToCollection {
+class SubsoilUserImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
 		
-		$isFirst = true;
-
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$creationArray = [
 				'company' => trim($row[0]),
 				'address' => $row[1],
@@ -42,14 +36,7 @@ class SubsoilUserImport implements ToCollection {
 			SubsoilUser::create($creationArray);
 		}
 
-		$isFirst = true;
-
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			if (trim($row[10]) == 'Самостоятельные' || 
 				trim($row[10]) == '') continue;
 
@@ -73,5 +60,10 @@ class SubsoilUserImport implements ToCollection {
 			/* $subsoil_user->update(['management_company' => $management_company]); */
 			
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }

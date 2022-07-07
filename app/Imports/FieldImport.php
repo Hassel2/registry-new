@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class FieldImport implements ToCollection {
+class FieldImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
@@ -20,14 +21,7 @@ class FieldImport implements ToCollection {
 		#############################
 		# development_degree import #
 		#############################
-		$isFisrt = true;
-
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
 			$creationArray = [
 				'degree' => trim($row[2])
 			];
@@ -41,17 +35,10 @@ class FieldImport implements ToCollection {
 			DevelopmentDegree::create($creationArray);
 		}
 
-		$isFirst = true;
-
 		#################
 		# fields import #
 		#################
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$developmentDegree = DB::table('development_degree')
 				->select('id')
 				->where('degree', '=', $row[2])
@@ -142,5 +129,10 @@ class FieldImport implements ToCollection {
 				FieldComposition::create($creationArray);
 			}
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }
