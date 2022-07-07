@@ -5380,6 +5380,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5425,7 +5427,7 @@ __webpack_require__.r(__webpack_exports__);
           id: -1,
           nodes: [],
           message: "root"
-        }; //console.log(this.$parent.$refs.tree.tree);
+        };
 
         for (var i = 0; i < companies.length; i++) {
           var Currentname = {
@@ -5586,14 +5588,13 @@ __webpack_require__.r(__webpack_exports__);
                 message: res.data.message,
                 nodes: []
               };
-              console.log(Currentname);
 
               _this.nodes.push(Currentname);
             }
           }
         });
       } else {
-        this.nodes.length = [];
+        if (message != "root") this.nodes.length = [];
       }
 
       this.showChildren = !this.showChildren;
@@ -28904,16 +28905,18 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "Licenses" },
-      [
-        _c("search-component"),
-        _vm._v(" "),
-        _c("tree-component", { ref: "tree" }),
-      ],
-      1
-    ),
+    _c("div", { staticClass: "Licenses" }, [
+      _c(
+        "div",
+        { staticClass: "container" },
+        [
+          _c("search-component"),
+          _vm._v(" "),
+          _c("tree-component", { ref: "tree" }),
+        ],
+        1
+      ),
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "Content" }, [_vm._v("Content")]),
   ])
@@ -28941,7 +28944,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "row" }, [
     _c("input", {
       directives: [
         {
@@ -28951,6 +28954,7 @@ var render = function () {
           expression: "$root.search",
         },
       ],
+      staticClass: "col",
       domProps: { value: _vm.$root.search },
       on: {
         input: function ($event) {
@@ -28962,7 +28966,7 @@ var render = function () {
       },
     }),
     _vm._v(" "),
-    _c("button", { staticClass: "btn btn-warning" }, [
+    _c("button", { staticClass: "col-md-auto btn btn-warning" }, [
       _c("i", {
         staticClass: "bi bi-search-heart",
         on: {

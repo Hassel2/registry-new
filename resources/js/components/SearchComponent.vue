@@ -1,7 +1,7 @@
 <template>
-  <div>
-      <input v-model="$root.search"/>
-      <button class="btn btn-warning">
+  <div class = "row">
+      <input class = "col" v-model="$root.search"/>
+      <button class="col-md-auto btn btn-warning">
         <i class="bi bi-search-heart" @click="GetSearch($root.search)"></i>
       </button>
   </div>
@@ -23,7 +23,6 @@ export default {
                 nodes: [ ],
                 message: "root",
             }
-            //console.log(this.$parent.$refs.tree.tree);
 
             for(let i = 0; i < companies.length; i++){
                 let Currentname = {name: companies[i].name, id: companies[i].id, message: "companies", nodes: []}

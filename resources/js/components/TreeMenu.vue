@@ -47,7 +47,6 @@ export default {
           if(message == "companies"){
             for(let i = 0; i < companies.length; i++){
               let Currentname = {name: companies[i].name, id: companies[i].id, message: res.data.message, nodes: []}
-              console.log(Currentname)
               this.nodes.push(Currentname)
             }
           }
@@ -55,7 +54,7 @@ export default {
       }
       
       else{
-        this.nodes.length = []
+        if(message != "root") this.nodes.length = []
       }
 
       this.showChildren = !this.showChildren;
