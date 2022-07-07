@@ -21,6 +21,13 @@ class SubsoilUsersTree extends Controller
 				->get()[0]
 				->amount;
 			
+			if ($amount == 0)
+				$amount = DB::table('license_areas')
+					->select(DB::raw('count(*) as amount'))
+					->where('subsoil_user', '=', $subsoilUser->id)
+					->get()[0]
+					->amount;
+			
 			$subsoilUser->amount = $amount;
 		}
 
@@ -41,6 +48,13 @@ class SubsoilUsersTree extends Controller
 					->where('management_company', '=', $subsoilUser->id)
 					->get()[0]
 					->amount;
+
+				if ($amount == 0)
+					$amount = DB::table('license_areas')
+						->select(DB::raw('count(*) as amount'))
+						->where('subsoil_user', '=', $subsoilUser->id)
+						->get()[0]
+						->amount;
 
 				$subsoilUser->amount = $amount;
 			}
@@ -70,6 +84,13 @@ class SubsoilUsersTree extends Controller
 					->where('management_company', '=', $subsoilUser->id)
 					->get()[0]
 					->amount;
+				
+				if ($amount == 0)
+					$amount = DB::table('license_areas')
+						->select(DB::raw('count(*) as amount'))
+						->where('subsoil_user', '=', $subsoilUser->id)
+						->get()[0]
+						->amount;
 
 				$subsoilUser->amount = $amount;
 			}
