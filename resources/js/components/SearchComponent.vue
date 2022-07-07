@@ -19,13 +19,14 @@ export default {
             
             this.$parent.$refs.tree.tree = {
                 name: "Недропользователи",
+                amount: "-",
                 id: -1,
                 nodes: [ ],
                 message: "root",
             }
 
             for(let i = 0; i < companies.length; i++){
-                let Currentname = {name: companies[i].name, id: companies[i].id, message: "companies", nodes: []}
+                let Currentname = {name: companies[i].name, amount: companies[i].amount, id: companies[i].id, message: "companies", nodes: []}
                 this.$parent.$refs.tree.tree.nodes.push(Currentname)
             }
 

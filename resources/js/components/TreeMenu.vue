@@ -1,17 +1,19 @@
 <template>
   <div class="tree-menu">
-    <div :style="indent"
+    <div class = "name"
+    :style="indent"
     @click="GetChildren($props.id, $props.message)">
       <!-- <span v-if="this.$props.nodes">
         <i :class="showChildren || $root.search != '' ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
       </span> -->
 
-      {{ name }}
+      {{ amount }} {{ name }} 
     </div>
     <tree-menu v-if="showChildren" 
     v-for="node in nodes" 
     :nodes="node.nodes" 
     :name="node.name" 
+    :amount="node.amount"
     :message="node.message"
     :id ="node.id"
     :depth="depth + 1"></tree-menu>
@@ -21,7 +23,7 @@
 <script>
 
 export default { 
-  props: ['name', 'nodes', 'id', 'message', 'depth'],
+  props: ['name', 'amount', 'nodes', 'id', 'message', 'depth'],
 
   data() {
     return { 
@@ -46,7 +48,7 @@ export default {
 
           if(message == "companies"){
             for(let i = 0; i < companies.length; i++){
-              let Currentname = {name: companies[i].name, id: companies[i].id, message: res.data.message, nodes: []}
+              let Currentname = {name: companies[i].name, amount: companies[i].amount, id: companies[i].id, message: res.data.message, nodes: []}
               this.nodes.push(Currentname)
             }
           }
@@ -63,3 +65,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.name{
+  white-space: nowrap;
+}
+</style>

@@ -4,6 +4,7 @@
       <tree-menu
         ref="menu"
         :name="tree.name"
+        :amount="tree.amount"
         :nodes="tree.nodes"
         :message="tree.message"
         :id="-1"
@@ -21,6 +22,7 @@ export default {
     return {
       tree: {
         name: "Недропользователи",
+        amount: "-",
         id: -1,
         nodes: [ ],
         message: "root",
@@ -40,7 +42,7 @@ export default {
           let companies = res.data.data
 
           for(let i = 0; i < companies.length; i++){
-            let Currentname = {name: companies[i].name, id: companies[i].id, message: res.data.message, nodes: []}
+            let Currentname = {name: companies[i].name, amount: companies[i].amount , id: companies[i].id, message: res.data.message, nodes: []}
             this.tree.nodes.push(Currentname)
           }
         })
