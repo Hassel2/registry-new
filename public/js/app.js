@@ -22764,8 +22764,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -22792,6 +22790,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/types */ "./node_modules/@babel/types/lib/index.js");
 /* harmony import */ var _babel_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_types__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -22931,14 +22931,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -46732,18 +46724,16 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "Licenses" }, [
-      _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("search-component"),
-          _vm._v(" "),
-          _c("tree-component", { ref: "tree" }),
-        ],
-        1
-      ),
-    ]),
+    _c(
+      "div",
+      { staticClass: "Licenses" },
+      [
+        _c("search-component"),
+        _vm._v(" "),
+        _c("tree-component", { ref: "tree" }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "Content" }, [_c("content-component")], 1),
   ])
@@ -46771,38 +46761,40 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.$root.search,
-          expression: "$root.search",
-        },
-      ],
-      staticClass: "col",
-      attrs: { placeholder: "ООО 'Зеленоглазое такси'" },
-      domProps: { value: _vm.$root.search },
-      on: {
-        input: function ($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.$set(_vm.$root, "search", $event.target.value)
-        },
-      },
-    }),
-    _vm._v(" "),
-    _c("button", { staticClass: "col-md-auto btn btn-warning" }, [
-      _c("i", {
-        staticClass: "bi bi-search-heart",
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.$root.search,
+            expression: "$root.search",
+          },
+        ],
+        staticClass: "col",
+        attrs: { placeholder: "ООО 'Зеленоглазое такси'" },
+        domProps: { value: _vm.$root.search },
         on: {
-          click: function ($event) {
-            return _vm.GetSearch(_vm.$root.search)
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.$root, "search", $event.target.value)
           },
         },
       }),
+      _vm._v(" "),
+      _c("button", { staticClass: "col-md-auto btn btn-warning" }, [
+        _c("i", {
+          staticClass: "bi bi-search-heart",
+          on: {
+            click: function ($event) {
+              return _vm.GetSearch(_vm.$root.search)
+            },
+          },
+        }),
+      ]),
     ]),
   ])
 }
@@ -46901,10 +46893,7 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
-          (_vm.amount != 0) & (_vm.amount != null)
-            ? _c("span", [_vm._v("(" + _vm._s(_vm.amount) + ")")])
-            : _vm._e(),
-          _vm._v("\n    " + _vm._s(_vm.name) + " \n  "),
+          _c("span", [_vm._v("\n      " + _vm._s(_vm.name) + "\n    ")]),
         ]
       ),
       _vm._v(" "),

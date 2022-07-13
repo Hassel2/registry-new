@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="Licenses">
-      <div class = "container">
-        <search-component></search-component>
-        <tree-component ref = 'tree'></tree-component>
-      </div>
+      <search-component></search-component>
+      <tree-component ref = 'tree'></tree-component>
     </div>
     <div class="Content">
       <content-component></content-component>

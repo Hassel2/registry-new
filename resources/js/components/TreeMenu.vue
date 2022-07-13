@@ -1,25 +1,17 @@
 <template>
   <div class="tree-menu">
-    <div class = "name"
-    :style="indent"
-    @click="GetChildren($props.id, $props.message)"
-    v-bind:title="this.$props.name">
+    <div class = "name" :style="indent" @click="GetChildren($props.id, $props.message)" v-bind:title="this.$props.name">
       <span v-if="amount != 0 & amount != null">
-        <i class="text-warning" 
-        :class="showChildren ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'">
-        </i>
+        <i class="text-warning" :class="showChildren ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
       </span>
-      <span v-if="amount != 0 & amount != null">({{ amount }})</span>
-      {{ name }} 
+      <span>
+        {{ name }}
+      </span> 
     </div>
-    <tree-menu v-if="showChildren" 
-    v-for="node in nodes" 
-    :nodes="node.nodes" 
-    :name="node.name" 
-    :amount="node.amount"
-    :message="node.message"
-    :id ="node.id"
-    :depth="depth + 1"></tree-menu>
+    <tree-menu v-if="showChildren" v-for="node in nodes" 
+    :nodes="node.nodes" :name="node.name" 
+    :amount="node.amount" :message="node.message" 
+    :id ="node.id" :depth="depth + 1"></tree-menu>
   </div>
 </template>
 

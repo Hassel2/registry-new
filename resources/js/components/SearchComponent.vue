@@ -1,9 +1,11 @@
 <template>
-  <div class = "row">
-      <input placeholder="ООО 'Зеленоглазое такси'" class = "col" v-model="$root.search"/>
-      <button class="col-md-auto btn btn-warning">
-        <i class="bi bi-search-heart" @click="GetSearch($root.search)"></i>
-      </button>
+  <div class = "container">
+    <div class = "row">
+        <input placeholder="ООО 'Зеленоглазое такси'" class = "col" v-model="$root.search"/>
+        <button class="col-md-auto btn btn-warning">
+          <i class="bi bi-search-heart" @click="GetSearch($root.search)"></i>
+        </button>
+    </div>
   </div>
 </template>
 
