@@ -6,18 +6,23 @@
         <tree-component ref = 'tree'></tree-component>
       </div>
     </div>
-    <div class="Content">Content</div>
+    <div class="Content">
+      <content-component></content-component>
+    </div>
   </div>
 </template>
 
 <script>
 import SearchComponent from './SearchComponent.vue';
 import TreeComponent from './TreeComponent.vue';
+import ContentComponent from './ContentComponent.vue';
+
 
 export default {
   components: {
     TreeComponent,
     SearchComponent,
+    ContentComponent,
   },
 };
 </script>

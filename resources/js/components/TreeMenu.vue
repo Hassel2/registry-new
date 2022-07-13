@@ -2,12 +2,15 @@
   <div class="tree-menu">
     <div class = "name"
     :style="indent"
-    @click="GetChildren($props.id, $props.message)">
-      <!-- <span v-if="this.$props.nodes">
-        <i :class="showChildren || $root.search != '' ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
-      </span> -->
-
-      {{ amount }} {{ name }} 
+    @click="GetChildren($props.id, $props.message)"
+    v-bind:title="this.$props.name">
+      <span v-if="amount != 0 & amount != null">
+        <i class="text-warning" 
+        :class="showChildren ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'">
+        </i>
+      </span>
+      <span v-if="amount != 0 & amount != null">({{ amount }})</span>
+      {{ name }} 
     </div>
     <tree-menu v-if="showChildren" 
     v-for="node in nodes" 
@@ -58,7 +61,7 @@ export default {
       else{
         if(message != "root") this.nodes.length = []
       }
-
+      
       this.showChildren = !this.showChildren;
     },
 

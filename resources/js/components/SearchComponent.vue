@@ -1,6 +1,6 @@
 <template>
   <div class = "row">
-      <input class = "col" v-model="$root.search"/>
+      <input placeholder="ООО 'Зеленоглазое такси'" class = "col" v-model="$root.search"/>
       <button class="col-md-auto btn btn-warning">
         <i class="bi bi-search-heart" @click="GetSearch($root.search)"></i>
       </button>
@@ -8,14 +8,16 @@
 </template>
 
 <script>
+import { assertOptionalCallExpression } from '@babel/types';
+
 export default {
     methods: {
         GetSearch(searchStr){
         axios.get(`/api/search=${searchStr}`)
           .then(res => {
-            // console.log(res.data.data);
+            console.log(res.data.data);
             let companies = res.data.data.companies
-            let LicenseAreas = res.data.data.LicenseAreas
+            let LicenseAreas = res.data.data.licenseAreas
             
             this.$parent.$refs.tree.tree = {
                 name: "Недропользователи",
