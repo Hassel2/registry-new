@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use ZipStream\Bigint;
 
 class SubsoilUsersTree extends Controller
 {
@@ -72,40 +73,64 @@ class SubsoilUsersTree extends Controller
 
 	public function search(Request $request, $searchStr) {
 
-		$subsouilUsersSearch = DB::table('subsoil_users')
-			->select(DB::raw('id, company as name'))
+		if (trim($searchStr) == '') 
+			return $this->sendError('No search request was specified');
+
+		$subsoilUsersSearch = DB::table('subsoil_users')
+			->select(DB::raw('id, company as name, management_company'))
 			->where('company', 'like', '%'.$searchStr.'%')
 			->get();
 
-		if (count($subsouilUsersSearch) != 0) {
-			foreach ($subsouilUsersSearch as $subsoilUser) {
-				$amount = DB::table('subsoil_users')
-					->select(DB::raw('count(*) as amount'))
-					->where('management_company', '=', $subsoilUser->id)
-					->get()[0]
-					->amount;
-				
-				if ($amount == 0)
-					$amount = DB::table('license_areas')
-						->select(DB::raw('count(*) as amount'))
-						->where('subsoil_user', '=', $subsoilUser->id)
-						->get()[0]
-						->amount;
+		if (count($subsoilUsersSearch) == 0)
+			return $this->sendResponse([], 'No data');
 
-				$subsoilUser->amount = $amount;
+		$result = [];
+
+		foreach ($subsoilUsersSearch as $subsoilUser) {
+			if ($subsoilUser->management_company == null) {
+				$result[] = [
+					'id' => $subsoilUser->id,
+					'name' => $subsoilUser->name,
+				];
+				continue;
 			}
+			$result[] = $this->getTree($subsoilUser->management_company, 
+				[
+					'id' => $subsoilUser->id,
+					'name' => $subsoilUser->name,
+				]);
 		}
-			
-		$licenseAreasSearch = DB::table('license_areas')
-			->select('id', 'name')
-			->where('name', 'like', '%'.$searchStr.'%')
-			->get();
-
-		$result = [
-			'companies' => $subsouilUsersSearch,
-			'licenseAreas' => $licenseAreasSearch,
-		];
 
 		return $this->sendResponse($result, 'Data retrieved successfully');
+	}
+
+	private function getTree($managementCompanyId, $currentCompany): array {
+
+		$managementCompany = DB::table('subsoil_users')
+			->select(DB::raw('id, company as name, management_company'))
+			->where('id', '=', $managementCompanyId)
+			->get()[0];
+
+		/* $childs = DB::table('subsoil_users') */
+		/* 	->select(DB::raw('id, company as name, management_company')) */
+		/* 	->where('management_company', '=', $managementCompanyId) */
+		/* 	->where('id', '!=', $currentCompany['id']) */
+		/* 	->get(); */
+
+		if ($managementCompany->management_company == null)
+		{
+			return [
+				'id'     => $managementCompanyId, 
+				'name'   => $managementCompany->name, 
+				'nodes' => $currentCompany,
+			];
+		}
+
+		return $this->getTree($managementCompany->management_company, 
+			[
+				'id'     => $managementCompanyId,
+				'name'   => $managementCompany->name,
+				'nodes'  => $currentCompany,
+			]);
 	}
 }
