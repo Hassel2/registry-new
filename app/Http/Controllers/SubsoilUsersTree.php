@@ -72,37 +72,79 @@ class SubsoilUsersTree extends Controller
 	}
 
 	public function search(Request $request, $searchStr) {
-
 		if (trim($searchStr) == '') 
 			return $this->sendError('No search request was specified');
 
 		$subsoilUsersSearch = DB::table('subsoil_users')
-			->select(DB::raw('id, company as name, management_company'))
+			->select('id', 'management_company')
 			->where('company', 'like', '%'.$searchStr.'%')
+			->orderBy('management_company')
 			->get();
 
-		if (count($subsoilUsersSearch) == 0)
-			return $this->sendResponse([], 'No data');
-
+		$temp = [];
 		$result = [];
-
-		foreach ($subsoilUsersSearch as $subsoilUser) {
-			if ($subsoilUser->management_company == null) {
-				$result[] = [
-					'id' => $subsoilUser->id,
-					'name' => $subsoilUser->name,
-				];
-				continue;
+		for ($i = 0; $i < count($subsoilUsersSearch) - 1; $i++) {
+			$currentEl = $subsoilUsersSearch[$i];
+			$temp[] = $currentEl->id;
+			while (true) {
+				$managementCompany = $currentEl->management_company;
+				if ($managementCompany == null) break;
+				$temp[] = $managementCompany;
+				$currentEl = DB::table('subsoil_users')
+					->select('id', 'management_company')
+					->where('id', '=', $managementCompany)
+					->get()[0];
 			}
-			$result[] = $this->getTree($subsoilUser->management_company, 
-				[
-					'id' => $subsoilUser->id,
-					'name' => $subsoilUser->name,
-				]);
+			$result[] = $temp;
+			$temp = [];
 		}
 
 		return $this->sendResponse($result, 'Data retrieved successfully');
 	}
+
+	/* public function search(Request $request, $searchStr) { */
+
+	/* 	if (trim($searchStr) == '') */ 
+	/* 		return $this->sendError('No search request was specified'); */
+
+	/* 	$subsoilUsersSearch = DB::table('subsoil_users') */
+	/* 		->select(DB::raw('id, company as name, management_company')) */
+	/* 		->where('company', 'like', '%'.$searchStr.'%') */
+	/* 		->orderBy('management_company') */
+	/* 		->get(); */
+
+	/* 	if (count($subsoilUsersSearch) == 0) */
+	/* 		return $this->sendResponse([], 'No data found'); */
+
+	/* 	$result = []; */
+
+	/* 	foreach ($subsoilUsersSearch as $subsoilUser) { */
+	/* 		if ($subsoilUser->management_company == null) { */
+	/* 			$result[] = [ */
+	/* 				'id' => $subsoilUser->id, */
+	/* 				'name' => $subsoilUser->name, */
+	/* 			]; */
+	/* 			continue; */
+	/* 		} */
+	/* 		$result[] = $this->getTree($subsoilUser->management_company, */ 
+	/* 			[ */
+	/* 				'id' => $subsoilUser->id, */
+	/* 				'name' => $subsoilUser->name, */
+	/* 			]); */
+	/* 	} */
+
+	/* 	$temp = []; */
+	/* 	$newres = []; */
+	/* 	for ($i = 0; $i < count($result) - 1; $i++) { */
+	/* 		$temp[] = $result[$i]; */
+	/* 		if ($result[$i + 1]['id'] != $result[$i]['id']) { */
+	/* 			$newres[] = call_user_func_array("array_merge_recursive", $temp); */
+	/* 			$temp = []; */
+	/* 		} */
+	/* 	} */
+
+	/* 	return $this->sendResponse($newres, 'Data retrieved successfully'); */
+	/* } */
 
 	private function getTree($managementCompanyId, $currentCompany): array {
 
@@ -111,26 +153,20 @@ class SubsoilUsersTree extends Controller
 			->where('id', '=', $managementCompanyId)
 			->get()[0];
 
-		/* $childs = DB::table('subsoil_users') */
-		/* 	->select(DB::raw('id, company as name, management_company')) */
-		/* 	->where('management_company', '=', $managementCompanyId) */
-		/* 	->where('id', '!=', $currentCompany['id']) */
-		/* 	->get(); */
-
 		if ($managementCompany->management_company == null)
 		{
 			return [
-				'id'     => $managementCompanyId, 
-				'name'   => $managementCompany->name, 
+				'id'    => $managementCompanyId, 
+				'name'  => $managementCompany->name, 
 				'nodes' => $currentCompany,
 			];
 		}
 
 		return $this->getTree($managementCompany->management_company, 
 			[
-				'id'     => $managementCompanyId,
-				'name'   => $managementCompany->name,
-				'nodes'  => $currentCompany,
+				'id'    => $managementCompanyId,
+				'name'  => $managementCompany->name,
+				'nodes' => $currentCompany,
 			]);
 	}
 }
