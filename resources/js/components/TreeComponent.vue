@@ -2,12 +2,13 @@
   <div>
     <div class="container">
       <tree-menu
-        ref="menu"
+        :ref="`menu_${tree.id}`"
         :name="tree.name"
         :amount="tree.amount"
         :nodes="tree.nodes"
         :message="tree.message"
-        :id="-1"
+        :id="tree.id"
+        :light="false"
         :depth="0">
       </tree-menu>
     </div>
@@ -21,13 +22,13 @@ export default {
   data() {
     return {
       tree: {
-        name: "Недропользователи",
-        amount: "-",
-        id: -1,
-        nodes: [ ],
-        message: "root",
+        name: "Недропользователи", 
+        amount: "-", 
+        nodes: [ ], 
+        message: "root", 
+        id: 0,
+        light: false
       },
-
     };
   },
 
@@ -42,7 +43,14 @@ export default {
           let companies = res.data.data
 
           for(let i = 0; i < companies.length; i++){
-            let Currentname = {name: companies[i].name, amount: companies[i].amount , id: companies[i].id, message: res.data.message, nodes: []}
+            let Currentname = {
+              name: companies[i].name, 
+              amount: companies[i].amount, 
+              nodes: [], 
+              message: res.data.message, 
+              id: companies[i].id,
+              light: false
+            }
             this.tree.nodes.push(Currentname)
           }
         })
@@ -79,7 +87,7 @@ export default {
 
 .container {
   width: clamp(40%, 300px);
-  height: 560px;
+  height: 518px;
   overflow: auto;
 }
 </style>

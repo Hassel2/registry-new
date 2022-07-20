@@ -22790,6 +22790,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/types */ "./node_modules/@babel/types/lib/index.js");
 /* harmony import */ var _babel_types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_types__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TreeMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TreeMenu.vue */ "./resources/js/components/TreeMenu.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22802,46 +22817,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      isSearch: false
+    };
+  },
   methods: {
     GetSearch: function GetSearch(searchStr) {
       var _this = this;
 
+      var parent = this.$parent.$refs.tree.$refs.menu_0;
+      if (!parent.showChildren) parent.GetChildren(0, '-');
       axios.get("/api/search=".concat(searchStr)).then(function (res) {
-        console.log(res.data.data);
-        var companies = res.data.data.companies;
-        var LicenseAreas = res.data.data.licenseAreas;
-        _this.$parent.$refs.tree.tree = {
-          name: "Недропользователи",
-          amount: "-",
-          id: -1,
-          nodes: [],
-          message: "root"
-        };
+        var companies = res.data.data;
+        console.log(parent.$refs['menu_66']);
 
         for (var i = 0; i < companies.length; i++) {
-          var Currentname = {
-            name: companies[i].name,
-            amount: companies[i].amount,
-            id: companies[i].id,
-            message: "companies",
-            nodes: []
-          };
-
-          _this.$parent.$refs.tree.tree.nodes.push(Currentname);
-        }
-
-        for (var _i = 0; _i < LicenseAreas.length; _i++) {
-          var _Currentname = {
-            name: LicenseAreas[_i].name,
-            id: LicenseAreas[_i].id,
-            message: "licenseAreas",
-            nodes: []
-          };
-
-          _this.$parent.$refs.tree.tree.nodes.push(_Currentname);
+          _this.OpenNode(parent, companies[i], parent.$refs["menu_".concat(companies[i][companies[i].length - 1])]);
         }
       });
+    },
+    OpenNode: function OpenNode(parent, companies, currentRef) {
+      var _this2 = this;
+
+      console.log(companies); // console.log(currentRef)
+
+      if (currentRef == null) return;
+      if (!currentRef[0].showChildren) currentRef[0].GetChildren(companies[companies.length - 1], 'companies');
+      currentRef[0].isLight = true;
+      setTimeout(function () {
+        if (companies.length - 1 > 0) {
+          companies.pop();
+          console.log(companies); // console.log(companies[companies.length - 1])
+
+          _this2.OpenNode(parent, companies, currentRef[0].$refs["menu_".concat(companies[companies.length - 1])]);
+        }
+      }, 4000);
     }
   }
 });
@@ -22876,6 +22889,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -22883,9 +22897,10 @@ __webpack_require__.r(__webpack_exports__);
       tree: {
         name: "Недропользователи",
         amount: "-",
-        id: -1,
         nodes: [],
-        message: "root"
+        message: "root",
+        id: 0,
+        light: false
       }
     };
   },
@@ -22903,9 +22918,10 @@ __webpack_require__.r(__webpack_exports__);
           var Currentname = {
             name: companies[i].name,
             amount: companies[i].amount,
-            id: companies[i].id,
+            nodes: [],
             message: res.data.message,
-            nodes: []
+            id: companies[i].id,
+            light: false
           };
 
           _this.tree.nodes.push(Currentname);
@@ -22948,11 +22964,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['name', 'amount', 'nodes', 'id', 'message', 'depth'],
+  props: ['name', 'amount', 'nodes', 'message', 'id', 'depth'],
   data: function data() {
     return {
-      showChildren: false
+      showChildren: false,
+      isHovering: false,
+      isLight: false
     };
   },
   name: 'tree-menu',
@@ -22976,9 +23009,10 @@ __webpack_require__.r(__webpack_exports__);
               var Currentname = {
                 name: companies[i].name,
                 amount: companies[i].amount,
-                id: companies[i].id,
+                nodes: [],
                 message: res.data.message,
-                nodes: []
+                id: companies[i].id,
+                light: false
               };
 
               _this.nodes.push(Currentname);
@@ -28145,7 +28179,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  width: clamp(40%, 300px);\r\n  height: 560px;\r\n  overflow: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  width: clamp(40%, 300px);\r\n  height: 518px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -28169,7 +28203,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.name[data-v-b74685f0]{\r\n  white-space: nowrap;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.name[data-v-b74685f0]{\r\n  white-space: nowrap;\n}\n.hovering[data-v-b74685f0]{\r\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\r\n  background-color:coral\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -46827,13 +46861,14 @@ var render = function () {
       { staticClass: "container" },
       [
         _c("tree-menu", {
-          ref: "menu",
+          ref: "menu_" + _vm.tree.id,
           attrs: {
             name: _vm.tree.name,
             amount: _vm.tree.amount,
             nodes: _vm.tree.nodes,
             message: _vm.tree.message,
-            id: -1,
+            id: _vm.tree.id,
+            light: false,
             depth: 0,
           },
         }),
@@ -46873,11 +46908,18 @@ var render = function () {
         "div",
         {
           staticClass: "name",
+          class: { hovering: _vm.isHovering, lightning: _vm.isLight },
           style: _vm.indent,
           attrs: { title: this.$props.name },
           on: {
             click: function ($event) {
               return _vm.GetChildren(_vm.$props.id, _vm.$props.message)
+            },
+            mouseover: function ($event) {
+              _vm.isHovering = true
+            },
+            mouseleave: function ($event) {
+              _vm.isHovering = false
             },
           },
         },
@@ -46900,12 +46942,15 @@ var render = function () {
       _vm._l(_vm.nodes, function (node) {
         return _vm.showChildren
           ? _c("tree-menu", {
+              ref: "menu_" + node.id,
+              refInFor: true,
               attrs: {
-                nodes: node.nodes,
                 name: node.name,
                 amount: node.amount,
+                nodes: node.nodes,
                 message: node.message,
                 id: node.id,
+                light: false,
                 depth: _vm.depth + 1,
               },
             })

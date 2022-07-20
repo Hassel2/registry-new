@@ -1,6 +1,13 @@
 <template>
   <div class="tree-menu">
-    <div class = "name" :style="indent" @click="GetChildren($props.id, $props.message)" v-bind:title="this.$props.name">
+    <div 
+      class = "name" 
+      :style="indent"
+      @click="GetChildren($props.id, $props.message)"
+      v-bind:title="this.$props.name"
+      @mouseover="isHovering = true" 
+      @mouseleave="isHovering = false"
+      :class="{hovering: isHovering, lightning: isLight}">
       <span v-if="amount != 0 & amount != null">
         <i class="text-warning" :class="showChildren ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
       </span>
@@ -8,21 +15,31 @@
         {{ name }}
       </span> 
     </div>
-    <tree-menu v-if="showChildren" v-for="node in nodes" 
-    :nodes="node.nodes" :name="node.name" 
-    :amount="node.amount" :message="node.message" 
-    :id ="node.id" :depth="depth + 1"></tree-menu>
+    <tree-menu 
+      :ref="`menu_${node.id}`"
+      v-if="showChildren" 
+      v-for="node in nodes" 
+      :name="node.name" 
+      :amount="node.amount" 
+      :nodes="node.nodes" 
+      :message="node.message" 
+      :id ="node.id" 
+      :light="false"
+      :depth="depth + 1">
+    </tree-menu>
   </div>
 </template>
 
 <script>
 
 export default { 
-  props: ['name', 'amount', 'nodes', 'id', 'message', 'depth'],
+  props: ['name', 'amount', 'nodes', 'message', 'id', 'depth'],
 
   data() {
     return { 
-      showChildren: false
+      showChildren: false,
+      isHovering: false,
+      isLight: false,
     }
   },
 
@@ -40,10 +57,16 @@ export default {
         axios.get(`/api/rootCompany${id}/childs`)
         .then(res => {
           let companies = res.data.data
-
           if(message == "companies"){
             for(let i = 0; i < companies.length; i++){
-              let Currentname = {name: companies[i].name, amount: companies[i].amount, id: companies[i].id, message: res.data.message, nodes: []}
+              let Currentname = {
+                name: companies[i].name, 
+                amount: companies[i].amount, 
+                nodes: [], 
+                message: res.data.message, 
+                id: companies[i].id,
+                light: false
+              }
               this.nodes.push(Currentname)
             }
           }
@@ -56,7 +79,6 @@ export default {
       
       this.showChildren = !this.showChildren;
     },
-
   },
 }
 </script>
@@ -64,5 +86,11 @@ export default {
 <style scoped>
 .name{
   white-space: nowrap;
+}
+.hovering{
+  background-color: rgba(98, 197, 255, 0.5);
+}
+.lightning{
+  background-color:coral
 }
 </style>

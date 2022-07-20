@@ -83,7 +83,7 @@ class SubsoilUsersTree extends Controller
 
 		$temp = [];
 		$result = [];
-		for ($i = 0; $i < count($subsoilUsersSearch) - 1; $i++) {
+		for ($i = 0; $i < count($subsoilUsersSearch); $i++) {
 			$currentEl = $subsoilUsersSearch[$i];
 			$temp[] = $currentEl->id;
 			while (true) {
