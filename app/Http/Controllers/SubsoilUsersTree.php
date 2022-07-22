@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use ZipStream\Bigint;
 
 class SubsoilUsersTree extends Controller
 {
@@ -40,8 +39,8 @@ class SubsoilUsersTree extends Controller
 		$result = DB::table('subsoil_users')
 			->select(DB::raw('id, company as name'))
 			->where('management_company', '=', $id)
-			->get();	
-
+			->get();
+			
 		if (count($result) != 0) {
 			foreach ($result as $subsoilUser) {
 				$amount = DB::table('subsoil_users')
@@ -49,7 +48,7 @@ class SubsoilUsersTree extends Controller
 					->where('management_company', '=', $subsoilUser->id)
 					->get()[0]
 					->amount;
-
+					
 				if ($amount == 0)
 					$amount = DB::table('license_areas')
 						->select(DB::raw('count(*) as amount'))
@@ -64,7 +63,7 @@ class SubsoilUsersTree extends Controller
 		}
 
 		$result = DB::table('license_areas')
-			->select('id', 'name')
+			->select(DB::raw('-id, name'))
 			->where('subsoil_user', '=', $id)
 			->get();
 
@@ -75,10 +74,16 @@ class SubsoilUsersTree extends Controller
 		if (trim($searchStr) == '') 
 			return $this->sendError('No search request was specified');
 
+		$licenseAreaSearch = DB::table('license_areas')
+			->select(DB::raw('-id, subsoil_user as management_company'))
+			->where('name', 'like', '%'.$searchStr.'%')
+			->orderBy('subsoil_user');
+
 		$subsoilUsersSearch = DB::table('subsoil_users')
 			->select('id', 'management_company')
 			->where('company', 'like', '%'.$searchStr.'%')
 			->orderBy('management_company')
+			->union($licenseAreaSearch)
 			->get();
 
 		$temp = [];
@@ -88,7 +93,7 @@ class SubsoilUsersTree extends Controller
 			$temp[] = $currentEl->id;
 			while (true) {
 				$managementCompany = $currentEl->management_company;
-				if ($managementCompany == null) break;
+				if ($managementCompany == null) break; 
 				$temp[] = $managementCompany;
 				$currentEl = DB::table('subsoil_users')
 					->select('id', 'management_company')
@@ -100,73 +105,5 @@ class SubsoilUsersTree extends Controller
 		}
 
 		return $this->sendResponse($result, 'Data retrieved successfully');
-	}
-
-	/* public function search(Request $request, $searchStr) { */
-
-	/* 	if (trim($searchStr) == '') */ 
-	/* 		return $this->sendError('No search request was specified'); */
-
-	/* 	$subsoilUsersSearch = DB::table('subsoil_users') */
-	/* 		->select(DB::raw('id, company as name, management_company')) */
-	/* 		->where('company', 'like', '%'.$searchStr.'%') */
-	/* 		->orderBy('management_company') */
-	/* 		->get(); */
-
-	/* 	if (count($subsoilUsersSearch) == 0) */
-	/* 		return $this->sendResponse([], 'No data found'); */
-
-	/* 	$result = []; */
-
-	/* 	foreach ($subsoilUsersSearch as $subsoilUser) { */
-	/* 		if ($subsoilUser->management_company == null) { */
-	/* 			$result[] = [ */
-	/* 				'id' => $subsoilUser->id, */
-	/* 				'name' => $subsoilUser->name, */
-	/* 			]; */
-	/* 			continue; */
-	/* 		} */
-	/* 		$result[] = $this->getTree($subsoilUser->management_company, */ 
-	/* 			[ */
-	/* 				'id' => $subsoilUser->id, */
-	/* 				'name' => $subsoilUser->name, */
-	/* 			]); */
-	/* 	} */
-
-	/* 	$temp = []; */
-	/* 	$newres = []; */
-	/* 	for ($i = 0; $i < count($result) - 1; $i++) { */
-	/* 		$temp[] = $result[$i]; */
-	/* 		if ($result[$i + 1]['id'] != $result[$i]['id']) { */
-	/* 			$newres[] = call_user_func_array("array_merge_recursive", $temp); */
-	/* 			$temp = []; */
-	/* 		} */
-	/* 	} */
-
-	/* 	return $this->sendResponse($newres, 'Data retrieved successfully'); */
-	/* } */
-
-	private function getTree($managementCompanyId, $currentCompany): array {
-
-		$managementCompany = DB::table('subsoil_users')
-			->select(DB::raw('id, company as name, management_company'))
-			->where('id', '=', $managementCompanyId)
-			->get()[0];
-
-		if ($managementCompany->management_company == null)
-		{
-			return [
-				'id'    => $managementCompanyId, 
-				'name'  => $managementCompany->name, 
-				'nodes' => $currentCompany,
-			];
-		}
-
-		return $this->getTree($managementCompany->management_company, 
-			[
-				'id'    => $managementCompanyId,
-				'name'  => $managementCompany->name,
-				'nodes' => $currentCompany,
-			]);
 	}
 }
