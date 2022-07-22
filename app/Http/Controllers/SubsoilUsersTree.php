@@ -9,65 +9,54 @@ class SubsoilUsersTree extends Controller
 {
 	public function getManagementCompanies(Request $request) {
 
-		$result = DB::table('subsoil_users')
-			->select(DB::raw('id, company as name'))
-			->whereRaw('management_company is null')
-			->get();
-			
-		foreach ($result as $subsoilUser) {
-			$amount = DB::table('subsoil_users')
-				->select(DB::raw('count(*) as amount'))
-				->where('management_company', '=', $subsoilUser->id)
-				->get()[0]
-				->amount;
-			
-			if ($amount == 0)
-				$amount = DB::table('license_areas')
-					->select(DB::raw('count(*) as amount'))
-					->where('subsoil_user', '=', $subsoilUser->id)
-					->get()[0]
-					->amount;
-			
-			$subsoilUser->amount = $amount;
-		}
+		$license_areas = DB::table('license_areas')
+			->select(DB::raw('id, name, subsoil_user as management_company'));
 
-		return $this->sendResponse($result->toArray(), 'companies');
+		$childs = DB::table('subsoil_users')
+			->select(DB::raw('id, company as name, management_company'))
+			->whereNotNull('management_company')
+			->union($license_areas);
+
+		$result = DB::table(DB::raw('subsoil_users su'))
+			->select(DB::raw('su.id, company as name, count(childs.management_company) as amount'))
+			->leftJoinSub($childs, 'childs', function ($join) {
+				$join->on('childs.management_company', '=', 'su.id');
+			})
+			->whereNull('su.management_company')
+			->groupBy(DB::raw('su.id, childs.management_company'))
+			->orderBy(DB::raw('su.company'))
+			->get();
+		
+		return $this->sendResponse($result->toArray(), '');
 	}
 
 	public function getChildCompanies(Request $request, $id) {
 
-		$result = DB::table('subsoil_users')
-			->select(DB::raw('id, company as name'))
-			->where('management_company', '=', $id)
-			->get();
-			
-		if (count($result) != 0) {
-			foreach ($result as $subsoilUser) {
-				$amount = DB::table('subsoil_users')
-					->select(DB::raw('count(*) as amount'))
-					->where('management_company', '=', $subsoilUser->id)
-					->get()[0]
-					->amount;
-					
-				if ($amount == 0)
-					$amount = DB::table('license_areas')
-						->select(DB::raw('count(*) as amount'))
-						->where('subsoil_user', '=', $subsoilUser->id)
-						->get()[0]
-						->amount;
+		$license_areas = DB::table('license_areas')
+			->select(DB::raw('id, name, subsoil_user as management_company'));
 
-				$subsoilUser->amount = $amount;
-			}
-			
-			return $this->sendResponse($result->toArray(), 'companies');
-		}
+		$childs = DB::table('subsoil_users')
+			->select(DB::raw('id, company as name, management_company'))
+			->whereNotNull('management_company')
+			->union($license_areas);
+
+
+		$companies = DB::table(DB::raw('subsoil_users su'))
+			->select(DB::raw('su.id, company as name, count(childs.management_company) as amount'))
+			->leftJoinSub($childs, 'childs', function ($join) {
+				$join->on('childs.management_company', '=', 'su.id');
+			})
+			->where('su.management_company', '=', $id)
+			->groupBy(DB::raw('su.id, childs.management_company'))
+			->orderBy(DB::raw('su.company'));
 
 		$result = DB::table('license_areas')
-			->select(DB::raw('-id, name'))
+			->select(DB::raw('-id as id, name, 0 as amount'))
 			->where('subsoil_user', '=', $id)
+			->union($companies)
 			->get();
 
-		return $this->sendResponse($result->toArray(), 'licenseAreas');
+		return $this->sendResponse($result->toArray(), '');
 	}
 
 	public function search(Request $request, $searchStr) {
