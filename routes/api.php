@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/rootCompany', [SubsoilUsersTree::class, 'getManagementCompanies']);
-Route::get('/rootCompany{id}/childs', [SubsoilUsersTree::class, 'getChildCompanies']);
+Route::get('/rootCompany{id}/childs', [SubsoilUsersTree::class, 'getChilds']);
 Route::get('/search={searchStr}', [SubsoilUsersTree::class, 'search']);
