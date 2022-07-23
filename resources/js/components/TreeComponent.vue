@@ -6,9 +6,7 @@
         :name="tree.name"
         :amount="tree.amount"
         :nodes="tree.nodes"
-        :message="tree.message"
         :id="tree.id"
-        :light="false"
         :depth="0">
       </tree-menu>
     </div>
@@ -25,7 +23,6 @@ export default {
         name: "Недропользователи", 
         amount: "-", 
         nodes: [ ], 
-        message: "root", 
         id: 0,
         light: false
       },
@@ -47,7 +44,6 @@ export default {
               name: companies[i].name, 
               amount: companies[i].amount, 
               nodes: [], 
-              message: res.data.message, 
               id: companies[i].id,
               light: false
             }
@@ -86,8 +82,7 @@ export default {
 }
 
 .container {
-  width: clamp(40%, 300px);
-  height: 518px;
+  height: 550px;
   overflow: auto;
 }
 </style>

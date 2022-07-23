@@ -2,8 +2,9 @@
   <div class="tree-menu">
     <div 
       class = "name" 
+      :id = "$props.id"
       :style="indent"
-      @click="GetChildren($props.id, $props.message)"
+      @click="GetChildren($props.id)"
       v-bind:title="this.$props.name"
       @mouseover="isHovering = true" 
       @mouseleave="isHovering = false"
@@ -18,13 +19,11 @@
     <tree-menu 
       :ref="`menu_${node.id}`"
       v-if="showChildren" 
-      v-for="node in nodes" 
+      v-for="node in nodes" :key="node.id"
       :name="node.name" 
       :amount="node.amount" 
       :nodes="node.nodes" 
-      :message="node.message" 
       :id ="node.id" 
-      :light="false"
       :depth="depth + 1">
     </tree-menu>
   </div>
@@ -33,7 +32,7 @@
 <script>
 
 export default { 
-  props: ['name', 'amount', 'nodes', 'message', 'id', 'depth'],
+  props: ['name', 'amount', 'nodes', 'id', 'depth'],
 
   data() {
     return { 
@@ -52,18 +51,17 @@ export default {
   },
 
   methods: {
-    GetChildren(id, message) {
+    GetChildren(id) {
       if(!this.showChildren){
         axios.get(`/api/rootCompany${id}/childs`)
         .then(res => {
           let companies = res.data.data
-          if(message == "companies"){
+          if(id > 0){
             for(let i = 0; i < companies.length; i++){
               let Currentname = {
                 name: companies[i].name, 
                 amount: companies[i].amount, 
                 nodes: [], 
-                message: res.data.message, 
                 id: companies[i].id,
                 light: false
               }
@@ -74,7 +72,7 @@ export default {
       }
       
       else{
-        if(message != "root") this.nodes.length = []
+        if(id != 0) this.nodes.length = []
       }
       
       this.showChildren = !this.showChildren;
@@ -84,9 +82,9 @@ export default {
 </script>
 
 <style scoped>
-.name{
+/* .name{
   white-space: nowrap;
-}
+} */
 .hovering{
   background-color: rgba(98, 197, 255, 0.5);
 }

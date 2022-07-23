@@ -27,7 +27,7 @@ class SubsoilUsersTree extends Controller
 			->orderBy(DB::raw('su.company'))
 			->get();
 		
-		return $this->sendResponse($result->toArray(), '');
+		return $this->sendResponse($result->toArray(), 'companies');
 	}
 
 	public function getChildCompanies(Request $request, $id) {

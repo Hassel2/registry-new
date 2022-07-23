@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="Licenses">
+    <div class="Licenses border border-warning rounded shadow m-1">
       <search-component></search-component>
       <tree-component ref = 'tree'></tree-component>
     </div>
-    <div class="Content">
+    <div class="Content border border-warning rounded shadow m-1">
       <content-component></content-component>
     </div>
   </div>
@@ -27,16 +27,14 @@ export default {
 
 <style scoped>
 .Licenses {
-  height: 600px;
-  width: 23%;
+  height: 640px;
+  width: 22%;
   float: left;
-  border: 3px solid;
 }
 
 .Content {
-  height: 600px;
-  width: 77%;
+  height: 640px;
+  width: 76.5%;
   float: left;
-  border: 3px solid;
 }
 </style>

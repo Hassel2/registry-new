@@ -75,12 +75,12 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-1">
             @yield('content')
         </main>
 
-        <footer class="">
-            <div class="">
+        <footer class="text-center md-auto">
+            <div class="text-center">
               <span class="text-muted">© 2022 ФГБУ «ВНИГНИ», Inc</span>
             </div>
         </footer>

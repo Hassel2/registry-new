@@ -2,13 +2,13 @@
     <div>
         <div class="container">
             <div class="row">
-                <div class="text col-sm border border-warning text-center p-2 m-1">
+                <div class="text col-sm border border-warning rounded shadow text-center p-2 m-1">
                 Лицензия
                 </div>
-                <div class="text col-sm border border-warning text-center p-2 m-1">
+                <div class="text col-sm border border-warning rounded shadow text-center p-2 m-1">
                 Разработка
                 </div>
-                <div class="text col-sm border border-warning text-center p-2 m-1">
+                <div class="text col-sm border border-warning rounded shadow text-center p-2 m-1">
                 Документы
                 </div>
             </div>
@@ -125,7 +125,7 @@ export default {
 
 .container {
   width: clamp(40%, 300px);
-  height: 560px;
+  height: 630px;
   overflow: auto;
 }
 </style>
