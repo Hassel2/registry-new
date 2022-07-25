@@ -58,14 +58,8 @@ class FieldImport implements ToCollection, WithStartRow {
 			Field::create($creationArray);
 		}
 		
-		$isFirst = true;
 
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			#########################
 			# field_position import #
 			#########################
@@ -102,11 +96,10 @@ class FieldImport implements ToCollection, WithStartRow {
 				->get()[0]
 				->id;
 
-			foreach(explode('\n', $row[4]) as $license_area) {
-				if ($license_area = '') break;
-
+			$license_areas = explode('\r\n', $row[4]);
+			foreach($license_areas as $license_area) {
 				$license_area = rtrim(explode('(', $license_area)[0]);
-				
+
 				$license_area_id = DB::table('license_areas')
 					->select('id')
 					->where('name', '=', trim($license_area))
