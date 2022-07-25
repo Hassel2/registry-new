@@ -5756,22 +5756,22 @@ __webpack_require__.r(__webpack_exports__);
     GetChildren: function GetChildren(id) {
       var _this = this;
 
+      if (this.amount == 0 | this.amount == null) return;
+
       if (!this.showChildren) {
         axios.get("/api/rootCompany".concat(id, "/childs")).then(function (res) {
           var companies = res.data.data;
 
-          if (id > 0) {
-            for (var i = 0; i < companies.length; i++) {
-              var Currentname = {
-                name: companies[i].name,
-                amount: companies[i].amount,
-                nodes: [],
-                id: companies[i].id,
-                light: false
-              };
+          for (var i = 0; i < companies.length; i++) {
+            var Currentname = {
+              name: companies[i].name,
+              amount: companies[i].amount,
+              nodes: [],
+              id: companies[i].id,
+              light: false
+            };
 
-              _this.nodes.push(Currentname);
-            }
+            _this.nodes.push(Currentname);
           }
         });
       } else {
@@ -10886,7 +10886,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-e4489e22]{\r\n    background-color: rgb(214, 214, 214);\n}\r\n\r\n/* width */\n[data-v-e4489e22]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-e4489e22]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-e4489e22]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-e4489e22]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-e4489e22] {\r\n  width: clamp(40%, 300px);\r\n  height: 630px;\r\n  overflow: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-e4489e22]{\n    background-color: rgb(214, 214, 214);\n}\n\n/* width */\n[data-v-e4489e22]::-webkit-scrollbar {\n  width: 10px;\n}\n\n/* Track */\n[data-v-e4489e22]::-webkit-scrollbar-track {\n  background: #f1f1f1;\n}\n\n/* Handle */\n[data-v-e4489e22]::-webkit-scrollbar-thumb {\n  background: #888;\n}\n\n/* Handle on hover */\n[data-v-e4489e22]::-webkit-scrollbar-thumb:hover {\n  background: #555;\n}\n.container[data-v-e4489e22] {\n  width: clamp(40%, 300px);\n  height: 630px;\n  overflow: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10910,7 +10910,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.Licenses[data-v-477ce850] {\r\n  height: 640px;\r\n  width: 22%;\r\n  float: left;\n}\n.Content[data-v-477ce850] {\r\n  height: 640px;\r\n  width: 76.5%;\r\n  float: left;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.Licenses[data-v-477ce850] {\n  height: 640px;\n  width: 22%;\n  float: left;\n}\n.Content[data-v-477ce850] {\n  height: 640px;\n  width: 76.5%;\n  float: left;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10934,7 +10934,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showbutton[data-v-89b0c3cc]{\r\n  width: 3px;\r\n  height: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.showbutton[data-v-89b0c3cc]{\n  width: 3px;\n  height: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10958,7 +10958,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  height: 550px;\r\n  overflow: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\n  width: 10px;\n}\n\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\n  background: #f1f1f1;\n}\n\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\n  background: #888;\n}\n\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\n  background: #555;\n}\n.container[data-v-15fe7f24] {\n  height: 550px;\n  overflow: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10982,7 +10982,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .name{\r\n  white-space: nowrap;\r\n} */\n.hovering[data-v-b74685f0]{\r\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\r\n  background-color:coral\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .name{\n  white-space: nowrap;\n} */\n.hovering[data-v-b74685f0]{\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\n  background-color:coral\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

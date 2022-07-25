@@ -24,7 +24,7 @@ class SubsoilUsersTree extends Controller
 			})
 			->whereNull('su.management_company')
 			->groupBy(DB::raw('su.id, childs.management_company'))
-			->orderBy(DB::raw('su.company'))
+			->orderBy(DB::raw('su.id'))
 			->get();
 		
 		return $this->sendResponse($result->toArray(), 'companies');
@@ -57,11 +57,19 @@ class SubsoilUsersTree extends Controller
 			})
 			->where('su.management_company', '=', $id)
 			->groupBy(DB::raw('su.id, childs.management_company'))
-			->orderBy(DB::raw('su.company'));
+			->orderBy(DB::raw('su.id'));
 
-		$result = DB::table('license_areas')
-			->select(DB::raw('-id as id, name, 0 as amount'))
-			->where('subsoil_user', '=', $id)
+		$licenses = DB::table('licenses')
+			->select(DB::raw('id, concat(series, number, view) as name, license_area'));
+
+		$result = DB::table(DB::raw('license_areas la'))
+			->select(DB::raw('-la.id as id, la.name, count(licenses.license_area) as amount'))
+			->where('la.subsoil_user', '=', $id)
+			->leftJoinSub($licenses, 'licenses', function($join) {
+				$join->on('licenses.license_area', '=', 'la.id');
+			})
+			->groupBy(DB::raw('la.id, licenses.license_area'))
+			->orderBy('la.subsoil_user')
 			->union($companies)
 			->get();
 
@@ -111,10 +119,8 @@ class SubsoilUsersTree extends Controller
 					->where('id', '=', $managementCompany)
 					->get()[0];
 			}
-			$result[] = $temp;
 			$temp = [];
 		}
-
 
 		return $this->sendResponse($result, 'Data retrieved successfully');
 	}

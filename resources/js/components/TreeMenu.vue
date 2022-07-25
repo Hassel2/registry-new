@@ -52,11 +52,11 @@ export default {
 
   methods: {
     GetChildren(id) {
+	  if(this.amount == 0 | this.amount == null) return;
       if(!this.showChildren){
         axios.get(`/api/rootCompany${id}/childs`)
         .then(res => {
           let companies = res.data.data
-          if(id > 0){
             for(let i = 0; i < companies.length; i++){
               let Currentname = {
                 name: companies[i].name, 
@@ -67,7 +67,6 @@ export default {
               }
               this.nodes.push(Currentname)
             }
-          }
         })
       }
       
