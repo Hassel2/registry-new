@@ -42,7 +42,7 @@ class LicenseCard extends Controller
 		if (count($fieldId) == 0)
 			return $this->sendResponse($result->toArray());
 
-		$fieldId = $fieldId[0]->id;
+		$fieldId = $fieldId[0]->field;
 
 		$developmentDegree = DB::table('development_degree')
 			->select('*');
@@ -51,14 +51,30 @@ class LicenseCard extends Controller
 			->select(DB::raw(
 				'fields.id,
 				name,
-				dd.degree'))
+				dd.degree as degree'))
 			->leftJoinSub($developmentDegree, 'dd', function($join) {
 				$join->on('fields.development_degree', '=', 'dd.id');
 			})
 			->where('fields.id', '=', $fieldId)
 			->get();
 
-		$result[] = ['field' => $field];
+		$rf_subjects = DB::table('rf_subjects')
+			->select('fd.id', 'rf_subjects.name as subject', 'fd.name as federal_district')
+			->leftJoinSub(DB::table('federal_districts')->select('*'), 'fd', function($join) {
+				$join->on('fd.id', '=', 'rf_subjects.federal_district');
+			});
+
+		$field_position = DB::table('field_position as fp')
+			->select('fp.id', 'rs.subject', 'rs.federal_district')
+			->leftJoinSub($rf_subjects, 'rs', function($join) {
+				$join->on('rs.id', '=', 'fp.subject');
+			})
+			->where('field', '=', $fieldId)
+			->get();
+
+		$field[0]->position = $field_position;
+
+		$result[0]->field = $field;
 
 		return $this->sendResponse($result->toArray());
 	}
