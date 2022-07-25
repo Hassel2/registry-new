@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class FieldImport implements ToCollection {
+class FieldImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
@@ -20,14 +21,7 @@ class FieldImport implements ToCollection {
 		#############################
 		# development_degree import #
 		#############################
-		$isFisrt = true;
-
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
 			$creationArray = [
 				'degree' => trim($row[2])
 			];
@@ -41,17 +35,10 @@ class FieldImport implements ToCollection {
 			DevelopmentDegree::create($creationArray);
 		}
 
-		$isFirst = true;
-
 		#################
 		# fields import #
 		#################
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$developmentDegree = DB::table('development_degree')
 				->select('id')
 				->where('degree', '=', $row[2])
@@ -71,14 +58,8 @@ class FieldImport implements ToCollection {
 			Field::create($creationArray);
 		}
 		
-		$isFirst = true;
 
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			#########################
 			# field_position import #
 			#########################
@@ -115,11 +96,10 @@ class FieldImport implements ToCollection {
 				->get()[0]
 				->id;
 
-			foreach(explode('\n', $row[4]) as $license_area) {
-				if ($license_area = '') break;
-
+			$license_areas = explode('\r\n', $row[4]);
+			foreach($license_areas as $license_area) {
 				$license_area = rtrim(explode('(', $license_area)[0]);
-				
+
 				$license_area_id = DB::table('license_areas')
 					->select('id')
 					->where('name', '=', trim($license_area))
@@ -142,5 +122,10 @@ class FieldImport implements ToCollection {
 				FieldComposition::create($creationArray);
 			}
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }

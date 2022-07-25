@@ -5,28 +5,21 @@ namespace App\Imports;
 use App\Models\License;
 use App\Models\LicenseArea;
 use App\Models\FederalAuthority;
+use App\Models\SubsoilUser;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-class LicenseImport implements ToCollection {
+class LicenseImport implements ToCollection, WithStartRow {
 	use Importable;
 
 	public function collection(Collection $rows) {
 
-		$isFisrt = true;
-		$counter = 0;
-
 		foreach ($rows as $row) {
-			if ($isFisrt) {
-				$isFisrt = false; # To skip the heading row
-				continue;
-			}	
-
-			
 			########################
 			# license_areas import #
 			########################
@@ -36,8 +29,17 @@ class LicenseImport implements ToCollection {
 				->get();//[0]
 				//->id;
 			
-			if (count($subsoil_user) == 0) {  
-				$counter += 1;
+			if (count($subsoil_user) == 0) {
+				SubsoilUser::create([
+					'company' => trim($row[0]),
+					'address' => null,
+					'INN' => null,
+					'OKPO' => null,
+					'OKATO' => null,
+					'OGRN' => null,
+					'comments' => null,
+					'status' => null,
+				]);
 				continue; 
 			}
 			
@@ -73,14 +75,7 @@ class LicenseImport implements ToCollection {
 		###################
 		# licenses import #
 		###################
-		$isFirst = true;
-
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$license_area = DB::table('license_areas')
 				->select('id')
 				->where('name', '=', trim($row[1]))
@@ -118,14 +113,7 @@ class LicenseImport implements ToCollection {
 			License::create($creationArray);
 		}
 
-		$isFirst = true;
-
 		foreach ($rows as $row) {
-			if ($isFirst) {
-				$isFirst = false; # To skip the heading row
-				continue;
-			}
-
 			$prev_license = DB::table('licenses') 
 				->select('id')
 				->where(DB::raw('CONCAT(series, number, view)'), '=', $row[5])
@@ -139,5 +127,10 @@ class LicenseImport implements ToCollection {
 				->where('view', '=', trim($row[4]))
 				->update(['prev_license' => $prev_license]);	
 		}
+	}
+
+	public function startRow(): int
+	{
+		return 2;
 	}
 }
