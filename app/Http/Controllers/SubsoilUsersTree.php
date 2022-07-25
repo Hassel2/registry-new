@@ -27,7 +27,7 @@ class SubsoilUsersTree extends Controller
 			->orderBy(DB::raw('su.id'))
 			->get();
 		
-		return $this->sendResponse($result->toArray(), 'companies');
+		return $this->sendResponse($result->toArray());
 	}
 
 	public function getChilds(Request $request, $id) {
@@ -73,7 +73,7 @@ class SubsoilUsersTree extends Controller
 			->union($companies)
 			->get();
 
-		return $this->sendResponse($result->toArray(), '');
+		return $this->sendResponse($result->toArray());
 	}
 
 	public function search(Request $request, $searchStr) {
@@ -119,9 +119,10 @@ class SubsoilUsersTree extends Controller
 					->where('id', '=', $managementCompany)
 					->get()[0];
 			}
+			$result[] = $temp;
 			$temp = [];
 		}
 
-		return $this->sendResponse($result, 'Data retrieved successfully');
+		return $this->sendResponse($result);
 	}
 }
