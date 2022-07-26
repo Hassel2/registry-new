@@ -65,6 +65,7 @@ export default {
                 id: companies[i].id,
                 light: false
               }
+              console.log(Currentname)
               this.nodes.push(Currentname)
             }
         })

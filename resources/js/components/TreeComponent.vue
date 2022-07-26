@@ -50,6 +50,8 @@ export default {
             this.tree.nodes.push(Currentname)
           }
         })
+
+      this.$refs.menu_0.showChildren = true
     },
   },
 

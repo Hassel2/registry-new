@@ -5591,6 +5591,8 @@ __webpack_require__.r(__webpack_exports__);
       this.ShowBar = !this.ShowBar;
     },
     StartSearch: function StartSearch(searchStr) {
+      this.ShowBar = true;
+
       if (searchStr == null || searchStr.length == 0) {
         this.Search = "Введите значение для поиска";
         this.addArrows = false;
@@ -5610,6 +5612,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!parent.showChildren) parent.GetChildren(0);
       axios.get("/api/search=".concat(searchStr)).then(function (res) {
         var companies = res.data.data;
+        console.log(companies);
         _this.SearchCompanies = [];
         _this.SearchCompaniesValue = 0;
 
@@ -5619,15 +5622,16 @@ __webpack_require__.r(__webpack_exports__);
           _this.OpenNode(parent, companies[i], parent.$refs["menu_".concat(companies[i][companies[i].length - 1])]);
         }
 
+        console.log(_this.SearchCompanies);
         _this.Search = "\u041D\u0430\u0439\u0434\u0435\u043D\u043E ".concat(companies.length, " \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432");
       });
     },
     OpenNode: function OpenNode(parent, companies, currentRef) {
       var _this2 = this;
 
+      console.log(currentRef);
       if (currentRef == null) return;
-      if (!currentRef[0].showChildren) currentRef[0].GetChildren(companies[companies.length - 1]);
-      currentRef[0].isLight = true;
+      if (!currentRef[0].showChildren && companies.length - 1 == 1) currentRef[0].GetChildren(companies[companies.length - 1]);
 
       if (companies.length - 1 > 0) {
         setTimeout(function () {
@@ -5635,7 +5639,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.OpenNode(parent, companies, currentRef[0].$refs["menu_".concat(companies[companies.length - 1])]);
         }, 1000);
-      }
+      } else currentRef[0].isLight = true;
     }
   }
 });
@@ -5704,6 +5708,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.tree.nodes.push(Currentname);
         }
       });
+      this.$refs.menu_0.showChildren = true;
     }
   },
   components: {
@@ -5790,6 +5795,7 @@ __webpack_require__.r(__webpack_exports__);
               id: companies[i].id,
               light: false
             };
+            console.log(Currentname);
 
             _this.nodes.push(Currentname);
           }
@@ -10978,7 +10984,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  height: 550px;\r\n  overflow: auto;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  height: 550px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11002,7 +11008,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .name{\r\n  white-space: nowrap;\r\n} */\n.hovering[data-v-b74685f0]{\r\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\r\n  background-color:coral\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .name{\r\n  white-space: nowrap;\r\n} */\n.hovering[data-v-b74685f0]{\r\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\r\n  background-color:coral\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

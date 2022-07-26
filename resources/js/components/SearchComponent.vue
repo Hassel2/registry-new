@@ -68,6 +68,7 @@ export default {
     },
 
     StartSearch(searchStr){
+      this.ShowBar = true
       if (searchStr == null || searchStr.length == 0)
       {
         this.Search =  "Введите значение для поиска"
@@ -92,21 +93,23 @@ export default {
       axios.get(`/api/search=${searchStr}`)
         .then(res => {
           let companies = res.data.data
+          console.log(companies)
           this.SearchCompanies = []
           this.SearchCompaniesValue = 0
           for (let i = 0; i < companies.length; i++) {
             this.SearchCompanies.push(companies[i][0])
             this.OpenNode(parent, companies[i], parent.$refs[`menu_${companies[i][companies[i].length - 1]}`])
           }
+          console.log(this.SearchCompanies)
           this.Search = `Найдено ${companies.length} элементов`
         }
       )
     },
 
     OpenNode(parent, companies, currentRef) {
+      console.log(currentRef);
       if (currentRef == null) return
-      if (!currentRef[0].showChildren) currentRef[0].GetChildren(companies[companies.length - 1])
-      currentRef[0].isLight = true
+      if (!currentRef[0].showChildren && companies.length - 1 == 1) currentRef[0].GetChildren(companies[companies.length - 1])
 
       if (companies.length - 1 > 0) {
         setTimeout(() => {
@@ -114,6 +117,7 @@ export default {
           this.OpenNode(parent, companies, currentRef[0].$refs[`menu_${companies[companies.length - 1]}`])
         }, 1000)
       }
+      else currentRef[0].isLight = true
     }
   },
 }
