@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <button class="btn btn-warning col-sm-auto m-1" @click="isShowBar()">
+      <button class="col-md-auto btn btn-warning m-1" @click="isShowBar()">
         <i class="bi bi-arrow-bar-down" v-if="!ShowBar"></i>
         <i class="bi bi-arrow-bar-up" v-if="ShowBar"></i>
       </button>
@@ -11,7 +11,8 @@
       </button>
     </div>
 
-    <div class="row" v-show="ShowBar">
+    <transition name="fade">
+      <div class="row" v-show="ShowBar">
       <span class="col text-muted"> {{  Search  }}  </span>
       <button class="col-md-auto btn btn-warning btn-sm me-1" 
         v-if="addArrows" @click="ScrollUp()" title="Выбрать предыдущий элемент">
@@ -26,6 +27,7 @@
         <i class="bi bi-trash-fill"></i>
       </button>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -118,8 +120,10 @@ export default {
 </script>
 
 <style scoped>
-.showbutton{
-  width: 3px;
-  height: auto;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -5492,6 +5492,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5500,6 +5508,16 @@ __webpack_require__.r(__webpack_exports__);
     TreeComponent: _TreeComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     SearchComponent: _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     ContentComponent: _ContentComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      ShowContent: true
+    };
+  },
+  methods: {
+    isShowContent: function isShowContent() {
+      this.ShowContent = !this.ShowContent;
+    }
   }
 });
 
@@ -5516,6 +5534,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -10886,7 +10906,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-e4489e22]{\n    background-color: rgb(214, 214, 214);\n}\n\n/* width */\n[data-v-e4489e22]::-webkit-scrollbar {\n  width: 10px;\n}\n\n/* Track */\n[data-v-e4489e22]::-webkit-scrollbar-track {\n  background: #f1f1f1;\n}\n\n/* Handle */\n[data-v-e4489e22]::-webkit-scrollbar-thumb {\n  background: #888;\n}\n\n/* Handle on hover */\n[data-v-e4489e22]::-webkit-scrollbar-thumb:hover {\n  background: #555;\n}\n.container[data-v-e4489e22] {\n  width: clamp(40%, 300px);\n  height: 630px;\n  overflow: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text[data-v-e4489e22]{\r\n    background-color: rgb(214, 214, 214);\n}\r\n\r\n/* width */\n[data-v-e4489e22]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-e4489e22]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-e4489e22]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-e4489e22]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-e4489e22] {\r\n  width: clamp(40%, 300px);\r\n  height: 630px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10910,7 +10930,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.Licenses[data-v-477ce850] {\n  height: 640px;\n  width: 22%;\n  float: left;\n}\n.Content[data-v-477ce850] {\n  height: 640px;\n  width: 76.5%;\n  float: left;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.slide-fade-enter-active[data-v-477ce850] {\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active[data-v-477ce850] {\r\n  transition: all .0s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter[data-v-477ce850],\r\n.slide-fade-leave-to[data-v-477ce850] {\r\n  transform: translateX(10px);\r\n  opacity: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10934,7 +10954,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.showbutton[data-v-89b0c3cc]{\n  width: 3px;\n  height: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-enter-active[data-v-89b0c3cc], .fade-leave-active[data-v-89b0c3cc] {\r\n  transition: opacity .5s;\n}\n.fade-enter[data-v-89b0c3cc], .fade-leave-to[data-v-89b0c3cc] /* .fade-leave-active до версии 2.1.8 */ {\r\n  opacity: 0;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10958,7 +10978,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\n  width: 10px;\n}\n\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\n  background: #f1f1f1;\n}\n\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\n  background: #888;\n}\n\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\n  background: #555;\n}\n.container[data-v-15fe7f24] {\n  height: 550px;\n  overflow: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* width */\n[data-v-15fe7f24]::-webkit-scrollbar {\r\n  width: 10px;\n}\r\n\r\n/* Track */\n[data-v-15fe7f24]::-webkit-scrollbar-track {\r\n  background: #f1f1f1;\n}\r\n\r\n/* Handle */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb {\r\n  background: #888;\n}\r\n\r\n/* Handle on hover */\n[data-v-15fe7f24]::-webkit-scrollbar-thumb:hover {\r\n  background: #555;\n}\n.container[data-v-15fe7f24] {\r\n  height: 550px;\r\n  overflow: auto;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10982,7 +11002,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .name{\n  white-space: nowrap;\n} */\n.hovering[data-v-b74685f0]{\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\n  background-color:coral\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* .name{\r\n  white-space: nowrap;\r\n} */\n.hovering[data-v-b74685f0]{\r\n  background-color: rgba(98, 197, 255, 0.5);\n}\n.lightning[data-v-b74685f0]{\r\n  background-color:coral\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29543,22 +29563,61 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c(
       "div",
-      { staticClass: "Licenses border border-warning rounded shadow m-1" },
+      { staticClass: "row" },
       [
-        _c("search-component"),
+        _c(
+          "div",
+          {
+            staticClass: "border border-warning rounded shadow m-1",
+            class: _vm.ShowContent ? "col-sm-3" : "col",
+          },
+          [
+            _c("search-component"),
+            _vm._v(" "),
+            _c("tree-component", { ref: "tree" }),
+          ],
+          1
+        ),
         _vm._v(" "),
-        _c("tree-component", { ref: "tree" }),
+        _c(
+          "div",
+          {
+            staticClass: "col-md-auto border border-warning rounded my-1",
+            on: {
+              click: function ($event) {
+                return _vm.isShowContent()
+              },
+            },
+          },
+          [
+            !_vm.ShowContent
+              ? _c("i", { staticClass: "bi bi-caret-left-fill" })
+              : _c("i", { staticClass: "bi bi-caret-right-fill" }),
+          ]
+        ),
+        _vm._v(" "),
+        _c("transition", { attrs: { name: "slide-fade" } }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.ShowContent,
+                  expression: "ShowContent",
+                },
+              ],
+              staticClass: "col border border-warning rounded shadow m-1",
+            },
+            [_c("content-component")],
+            1
+          ),
+        ]),
       ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "Content border border-warning rounded shadow m-1" },
-      [_c("content-component")],
       1
     ),
   ])
@@ -29586,133 +29645,140 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-warning col-sm-auto m-1",
-          on: {
-            click: function ($event) {
-              return _vm.isShowBar()
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "button",
+          {
+            staticClass: "col-md-auto btn btn-warning m-1",
+            on: {
+              click: function ($event) {
+                return _vm.isShowBar()
+              },
             },
           },
-        },
-        [
-          !_vm.ShowBar
-            ? _c("i", { staticClass: "bi bi-arrow-bar-down" })
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.ShowBar
-            ? _c("i", { staticClass: "bi bi-arrow-bar-up" })
-            : _vm._e(),
-        ]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.$root.search,
-            expression: "$root.search",
-          },
-        ],
-        staticClass: "col m-1",
-        attrs: { placeholder: "ООО 'Зеленоглазое такси'" },
-        domProps: { value: _vm.$root.search },
-        on: {
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.$root, "search", $event.target.value)
-          },
-        },
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "col-md-auto btn btn-warning m-1",
+          [
+            !_vm.ShowBar
+              ? _c("i", { staticClass: "bi bi-arrow-bar-down" })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.ShowBar
+              ? _c("i", { staticClass: "bi bi-arrow-bar-up" })
+              : _vm._e(),
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.$root.search,
+              expression: "$root.search",
+            },
+          ],
+          staticClass: "col m-1",
+          attrs: { placeholder: "ООО 'Зеленоглазое такси'" },
+          domProps: { value: _vm.$root.search },
           on: {
-            click: function ($event) {
-              return _vm.StartSearch(_vm.$root.search)
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.$root, "search", $event.target.value)
             },
           },
-        },
-        [_c("i", { staticClass: "bi bi-search-heart" })]
-      ),
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
           {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.ShowBar,
-            expression: "ShowBar",
+            staticClass: "col-md-auto btn btn-warning m-1",
+            on: {
+              click: function ($event) {
+                return _vm.StartSearch(_vm.$root.search)
+              },
+            },
           },
-        ],
-        staticClass: "row",
-      },
-      [
-        _c("span", { staticClass: "col text-muted" }, [
-          _vm._v(" " + _vm._s(_vm.Search) + "  "),
-        ]),
-        _vm._v(" "),
-        _vm.addArrows
-          ? _c(
-              "button",
+          [_c("i", { staticClass: "bi bi-search-heart" })]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("transition", { attrs: { name: "fade" } }, [
+        _c(
+          "div",
+          {
+            directives: [
               {
-                staticClass: "col-md-auto btn btn-warning btn-sm me-1",
-                attrs: { title: "Выбрать предыдущий элемент" },
-                on: {
-                  click: function ($event) {
-                    return _vm.ScrollUp()
-                  },
-                },
+                name: "show",
+                rawName: "v-show",
+                value: _vm.ShowBar,
+                expression: "ShowBar",
               },
-              [_c("i", { staticClass: "bi bi-arrow-up-short" })]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.addArrows
-          ? _c(
-              "button",
-              {
-                staticClass: "col-md-auto btn btn-warning btn-sm me-1",
-                attrs: { title: "Выбрать следующий элемент" },
-                on: {
-                  click: function ($event) {
-                    return _vm.ScrollDown()
+            ],
+            staticClass: "row",
+          },
+          [
+            _c("span", { staticClass: "col text-muted" }, [
+              _vm._v(" " + _vm._s(_vm.Search) + "  "),
+            ]),
+            _vm._v(" "),
+            _vm.addArrows
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "col-md-auto btn btn-warning btn-sm me-1",
+                    attrs: { title: "Выбрать предыдущий элемент" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.ScrollUp()
+                      },
+                    },
                   },
-                },
-              },
-              [_c("i", { staticClass: "bi bi-arrow-down-short" })]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.addArrows
-          ? _c(
-              "button",
-              {
-                staticClass: "col-md-auto btn btn-warning btn-sm me-1",
-                attrs: { title: "Очистить поиск" },
-                on: {
-                  click: function ($event) {
-                    return _vm.DropSearch()
+                  [_c("i", { staticClass: "bi bi-arrow-up-short" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.addArrows
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "col-md-auto btn btn-warning btn-sm me-1",
+                    attrs: { title: "Выбрать следующий элемент" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.ScrollDown()
+                      },
+                    },
                   },
-                },
-              },
-              [_c("i", { staticClass: "bi bi-trash-fill" })]
-            )
-          : _vm._e(),
-      ]
-    ),
-  ])
+                  [_c("i", { staticClass: "bi bi-arrow-down-short" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.addArrows
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "col-md-auto btn btn-warning btn-sm me-1",
+                    attrs: { title: "Очистить поиск" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.DropSearch()
+                      },
+                    },
+                  },
+                  [_c("i", { staticClass: "bi bi-trash-fill" })]
+                )
+              : _vm._e(),
+          ]
+        ),
+      ]),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
