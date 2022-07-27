@@ -86,7 +86,7 @@ class SubsoilUsersTree extends Controller
 			->orderBy('subsoil_user');
 
 		$licenseSearch = DB::table('licenses')
-			->select(DB::raw('concat(\'l\', id) as id, license_area as management_company'))
+			->select(DB::raw('concat(\'l\', id) as id, -license_area as management_company'))
 			->whereRaw('concat(series, number, view) like \'%'.$searchStr.'%\'')
 			->orderBy('license_area');
 
@@ -110,7 +110,7 @@ class SubsoilUsersTree extends Controller
 				if (substr($currentEl->id, 0, 1) == 'l' ) {
 					$currentEl = DB::table('license_areas')
 						->select(DB::raw('id, subsoil_user as management_company'))
-						->where('id', '=', $managementCompany)
+						->where('id', '=', abs($managementCompany))
 						->get()[0];
 					continue;
 				}

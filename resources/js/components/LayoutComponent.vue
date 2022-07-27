@@ -11,7 +11,7 @@
       </div>
       <transition name="slide-fade">
         <div v-show="ShowContent" class="col border border-warning rounded shadow m-1">
-          <content-component></content-component>
+          <content-component ref='content'></content-component>
         </div>
       </transition>
     </div>

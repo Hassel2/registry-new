@@ -1,41 +1,29 @@
 <template>
   <div class="tree-menu">
-    <div 
-      class = "name" 
-      :id = "$props.id"
-      :style="indent"
-      @click="GetChildren($props.id)"
-      v-bind:title="this.$props.name"
-      @mouseover="isHovering = true" 
-      @mouseleave="isHovering = false"
-      :class="{hovering: isHovering, lightning: isLight}">
+    <div class="name" :id="$props.id" :style="indent" @click="GetChildren($props.id)" v-bind:title="this.$props.name"
+      @mouseover="isHovering = true" @mouseleave="isHovering = false"
+      :class="{ hovering: isHovering, lightning: isLight }">
       <span v-if="amount != 0 & amount != null">
         <i class="text-warning" :class="showChildren ? 'bi bi-caret-down-fill' : 'bi bi-caret-right-fill'"></i>
       </span>
       <span>
         {{ name }}
-      </span> 
+      </span>
     </div>
-    <tree-menu 
-      :ref="`menu_${node.id}`"
-      v-if="showChildren" 
-      v-for="node in nodes" :key="node.id"
-      :name="node.name" 
-      :amount="node.amount" 
-      :nodes="node.nodes" 
-      :id ="node.id" 
-      :depth="depth + 1">
+    <tree-menu :ref="`menu_${node.id}`" v-if="showChildren" v-for="node in nodes" :key="node.id" :name="node.name"
+      :amount="node.amount" :nodes="node.nodes" :id="node.id" :depth="depth + 1">
     </tree-menu>
   </div>
 </template>
 
 <script>
+import ContentComponent from './ContentComponent'
 
-export default { 
+export default {
   props: ['name', 'amount', 'nodes', 'id', 'depth'],
 
   data() {
-    return { 
+    return {
       showChildren: false,
       isHovering: false,
       isLight: false,
@@ -52,31 +40,44 @@ export default {
 
   methods: {
     GetChildren(id) {
-	  if(this.amount == 0 | this.amount == null) return;
-      if(!this.showChildren){
-        axios.get(`/api/rootCompany${id}/childs`)
-        .then(res => {
+      if (id[0] == 'l') this.GetLicenseRef(id)
+      if (this.amount == 0 | this.amount == null) return;
+      if (!this.showChildren) {
+        axios.get(`/api/rootCompany${id}/childs`).then(res => {
           let companies = res.data.data
-            for(let i = 0; i < companies.length; i++){
-              let Currentname = {
-                name: companies[i].name, 
-                amount: companies[i].amount, 
-                nodes: [], 
-                id: companies[i].id,
-                light: false
-              }
-              console.log(Currentname)
-              this.nodes.push(Currentname)
+          for (let i = 0; i < companies.length; i++) {
+            let Currentname = {
+              name: companies[i].name,
+              amount: companies[i].amount,
+              nodes: [],
+              id: companies[i].id,
+              light: false
             }
+            //console.log(Currentname)
+            this.nodes.push(Currentname)
+          }
         })
       }
-      
-      else{
-        if(id != 0) this.nodes.length = []
+
+      else {
+        if (id != 0) this.nodes.length = []
       }
-      
+
       this.showChildren = !this.showChildren;
     },
+
+    GetLicenseRef(id){
+      var ref = this.$parent.$parent
+      for(var i = 0; i < this.$props.depth; i++) {
+        ref = ref.$parent
+      }
+      ref.$refs.content.GetLicension(id.slice(1))
+
+    },
+  },
+
+  components: {
+    ContentComponent
   },
 }
 </script>
@@ -85,10 +86,11 @@ export default {
 /* .name{
   white-space: nowrap;
 } */
-.hovering{
+.hovering {
   background-color: rgba(98, 197, 255, 0.5);
 }
-.lightning{
-  background-color:coral
+
+.lightning {
+  background-color: coral
 }
 </style>
